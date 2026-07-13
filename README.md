@@ -1,6 +1,6 @@
 # React App Todo List
 
-The name of the app will be TiMo ToDo, and it is a Todo list app that I am building to learn how to build web applications with the React library.
+The name of the app will be TiMo ToDo, and it is a Todo list app that I am building to learn how to build web applications with the React library. The app uses React to dynamically add items to the todo list.
 
 ## Installation
 
