@@ -25,7 +25,7 @@ function TodoListItem({ todo, onCompleteTodo, onUpdateTodo }) {
   }
 
   function handleUpdate(e) {
-    if (!isEditing) return;
+    if (isEditing === false) return;
     e.preventDefault();
     const finalTitle = finishEdit();
     onUpdateTodo({ ...todo, title: finalTitle });
@@ -40,6 +40,8 @@ function TodoListItem({ todo, onCompleteTodo, onUpdateTodo }) {
               value={workingTitle}
               onChange={handleEdit}
               ref={editRef}
+              elementId="todoTitle"
+              label="Todo"
             />
             <button onClick={cancelEdit} type="button">
               Cancel
