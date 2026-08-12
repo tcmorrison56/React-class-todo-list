@@ -1,32 +1,25 @@
-// import { useState } from "react";
-import { useEditableTitle } from "../../hooks/useEditableTitle";
+import { useState } from "react";
 import TextInputWithLabel from "/src/shared/TextInputWithLabel";
 import { isValidTodoTitle } from "../../utils/todoValidation";
 
 function TodoListItem({ todo, onCompleteTodo, onUpdateTodo }) {
-  const {
-    isEditing,
-    workingTitle,
-    startEditing,
-    cancelEdit,
-    updateTitle,
-    finishEdit,
-  } = useEditableTitle(todo.title);
+  const [isEditing, setIsEditing] = useState(false);
+  const [workingTitle, setWorkingTitle] = useState(todo.title);
 
-  // function handleCancel() {
-  //   setWorkingTitle(todo.title);
-  //   setIsEditing(false);
-  // }
+  function handleCancel() {
+    setWorkingTitle(todo.title);
+    setIsEditing(false);
+  }
 
-  function handleEdit(e) {
-    updateTitle(e.target.value);
+  function handleEvent(e) {
+    setWorkingTitle(e.target.value);
   }
 
   function handleUpdate(e) {
     if (!isEditing) return;
     e.preventDefault();
-    const finalTitle = finishEdit();
-    onUpdateTodo({ ...todo, title: finalTitle });
+    onUpdateTodo({ ...todo, title: workingTitle });
+    setIsEditing(false);
   }
 
   return (
@@ -34,8 +27,8 @@ function TodoListItem({ todo, onCompleteTodo, onUpdateTodo }) {
       <form onSubmit={handleUpdate}>
         {isEditing ? (
           <>
-            <TextInputWithLabel value={workingTitle} onChange={handleEdit} />
-            <button onClick={cancelEdit}>Cancel</button>
+            <TextInputWithLabel value={workingTitle} onChange={handleEvent} />
+            <button onClick={handleCancel}>Cancel</button>
             <button
               type="button"
               onClick={handleUpdate}
@@ -54,7 +47,7 @@ function TodoListItem({ todo, onCompleteTodo, onUpdateTodo }) {
                 onChange={() => onCompleteTodo(todo.id)}
               />
             </label>
-            <span onClick={() => startEditing()}>{todo.title}</span>
+            <span onClick={() => setIsEditing(true)}>{todo.title}</span>
           </>
         )}
       </form>

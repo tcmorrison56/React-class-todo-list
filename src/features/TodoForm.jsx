@@ -1,5 +1,4 @@
-import { useRef } from "react";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import TextInputWithLabel from "/src/shared/TextInputWithLabel.jsx";
 import { isValidTodoTitle } from "../utils/todoValidation";
 
@@ -14,7 +13,6 @@ function TodoForm({ onAddTodo }) {
   const handleAddTodo = (event) => {
     event.preventDefault();
 
-    // Should the if statement contain todoTitle or workingTodoTitle?
     if (workingTodoTitle && workingTodoTitle !== "") {
       onAddTodo(workingTodoTitle);
       setWorkingTodoTitle("");
