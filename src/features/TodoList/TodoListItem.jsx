@@ -1,25 +1,34 @@
-import { useState } from "react";
-import TextInputWithLabel from "/src/shared/TextInputWithLabel";
+import { useRef } from "react";
+import { useEditableTitle } from "../../hooks/useEditableTitle";
+import TextInputWithLabel from "../../shared/TextInputWithLabel";
 import { isValidTodoTitle } from "../../utils/todoValidation";
 
 function TodoListItem({ todo, onCompleteTodo, onUpdateTodo }) {
-  const [isEditing, setIsEditing] = useState(false);
-  const [workingTitle, setWorkingTitle] = useState(todo.title);
+  const {
+    isEditing,
+    workingTitle,
+    startEditing,
+    cancelEdit,
+    updateTitle,
+    finishEdit,
+  } = useEditableTitle(todo.title);
 
-  function handleCancel() {
-    setWorkingTitle(todo.title);
-    setIsEditing(false);
-  }
+  const editRef = useRef();
 
-  function handleEvent(e) {
-    setWorkingTitle(e.target.value);
+  // function handleCancel() {
+  //   setWorkingTitle(todo.title);
+  //   setIsEditing(false);
+  // }
+
+  function handleEdit(e) {
+    updateTitle(e.target.value);
   }
 
   function handleUpdate(e) {
     if (!isEditing) return;
     e.preventDefault();
-    onUpdateTodo({ ...todo, title: workingTitle });
-    setIsEditing(false);
+    const finalTitle = finishEdit();
+    onUpdateTodo({ ...todo, title: finalTitle });
   }
 
   return (
@@ -27,8 +36,14 @@ function TodoListItem({ todo, onCompleteTodo, onUpdateTodo }) {
       <form onSubmit={handleUpdate}>
         {isEditing ? (
           <>
-            <TextInputWithLabel value={workingTitle} onChange={handleEvent} />
-            <button onClick={handleCancel}>Cancel</button>
+            <TextInputWithLabel
+              value={workingTitle}
+              onChange={handleEdit}
+              ref={editRef}
+            />
+            <button onClick={cancelEdit} type="button">
+              Cancel
+            </button>
             <button
               type="button"
               onClick={handleUpdate}
@@ -47,7 +62,7 @@ function TodoListItem({ todo, onCompleteTodo, onUpdateTodo }) {
                 onChange={() => onCompleteTodo(todo.id)}
               />
             </label>
-            <span onClick={() => setIsEditing(true)}>{todo.title}</span>
+            <span onClick={() => startEditing()}>{todo.title}</span>
           </>
         )}
       </form>
