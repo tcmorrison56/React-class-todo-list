@@ -1,6 +1,6 @@
 import "./App.css";
-import TodoList from "../src/features/TodoList/TodoList.jsx";
-import TodoForm from "../src/features/TodoForm.jsx";
+import TodoList from "/src/features/TodoList/TodoList.jsx";
+import TodoForm from "/src/features/TodoForm.jsx";
 
 import { useState } from "react";
 
