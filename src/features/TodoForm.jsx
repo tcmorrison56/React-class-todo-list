@@ -17,6 +17,7 @@ function TodoForm({ onAddTodo }) {
       onAddTodo(workingTodoTitle);
       setWorkingTodoTitle("");
       inputRef.current.focus();
+      console.log(inputRef, "TodoForm");
     }
   };
 
