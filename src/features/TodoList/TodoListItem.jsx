@@ -17,15 +17,9 @@ function TodoListItem({ todo, onCompleteTodo, onUpdateTodo }) {
 
   useEffect(() => {
     if (isEditing && editRef.current) {
-      console.log(editRef);
       editRef.current.focus();
     }
   }, [isEditing]);
-
-  // function handleCancel() {
-  //   setWorkingTitle(todo.title);
-  //   setIsEditing(false);
-  // }
 
   function handleEdit(e) {
     updateTitle(e.target.value);
