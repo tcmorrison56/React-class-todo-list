@@ -9,7 +9,6 @@ export default function Logon({ onSetEmail, onSetToken }) {
   async function handleSubmit(event) {
     try {
       event.preventDefault();
-      setAuthError("");
       setIsLoggingOn(true);
       const response = await fetch("/api/users/logon", {
         method: "POST",
@@ -28,6 +27,7 @@ export default function Logon({ onSetEmail, onSetToken }) {
       setAuthError(`Error: ${error.name} | ${error.message}`);
     } finally {
       setIsLoggingOn(false);
+      setAuthError("");
     }
   }
 
