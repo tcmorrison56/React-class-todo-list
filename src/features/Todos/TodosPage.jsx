@@ -84,7 +84,6 @@ function TodosPage({ token }) {
         credentials: "include",
         body: JSON.stringify({ isCompleted: true }),
       });
-      console.log(response);
       if (!response.ok) {
         const rollbackTodos = todoList.map((todo) =>
           todo.id === rollbackTodo.id ? { ...rollbackTodo } : todo,
@@ -135,7 +134,13 @@ function TodosPage({ token }) {
   }
   return (
     <>
-      {error && <p>{error}</p>}
+      {error && (
+        <>
+          <p>{error}</p>
+          <button onClick={() => setError("")}>Clear Error</button>
+        </>
+      )}
+
       {isTodoListLoading && <p>Loading Todo List...</p>}
       <TodoForm onAddTodo={addTodo} />
       <TodoList
