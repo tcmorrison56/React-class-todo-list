@@ -39,14 +39,14 @@ export default function Logon({ onSetEmail, onSetToken }) {
   }
 
   return (
-    <form onSubmit={() => handleSubmit(event)}>
+    <form onSubmit={handleSubmit}>
       <p>{authError !== "" && authError}</p>
       <label htmlFor="email">Email</label>
       <input
         type="email"
         id="email"
         value={email}
-        onChange={() => handleChangeEmail(event)}
+        onChange={handleChangeEmail}
         required
       />
       <label htmlFor="password">Password</label>
@@ -54,7 +54,7 @@ export default function Logon({ onSetEmail, onSetToken }) {
         type="password"
         id="password"
         value={password}
-        onChange={() => handleChangePassword(event)}
+        onChange={handleChangePassword}
         required
       />
       <button disabled={isLoggingOn}>
