@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
-import TodoList from "./TodoList";
-import TodoForm from "../TodoForm";
+import TodoList from "./TodoList/TodoList";
+import TodoForm from "./TodoForm";
 
 function TodosPage({ token }) {
   const [todoList, setTodoList] = useState([]);
