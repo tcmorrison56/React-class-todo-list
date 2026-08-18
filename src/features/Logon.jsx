@@ -6,7 +6,7 @@ export default function Logon({ onSetEmail, onSetToken }) {
   const [authError, setAuthError] = useState("");
   const [isLoggingOn, setIsLoggingOn] = useState(false);
 
-  async function handleSubmit() {
+  async function handleSubmit(event) {
     try {
       event.preventDefault();
       setIsLoggingOn(true);
@@ -39,14 +39,14 @@ export default function Logon({ onSetEmail, onSetToken }) {
   }
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={() => handleSubmit(event)}>
       <p>{authError !== "" && authError}</p>
       <label htmlFor="email">Email</label>
       <input
         type="email"
         id="email"
         value={email}
-        onChange={handleChangeEmail}
+        onChange={() => handleChangeEmail(event)}
         required
       />
       <label htmlFor="password">Password</label>
@@ -54,7 +54,7 @@ export default function Logon({ onSetEmail, onSetToken }) {
         type="password"
         id="password"
         value={password}
-        onChange={handleChangePassword}
+        onChange={() => handleChangePassword(event)}
         required
       />
       <button disabled={isLoggingOn}>

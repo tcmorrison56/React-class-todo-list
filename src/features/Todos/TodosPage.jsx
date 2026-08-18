@@ -50,7 +50,11 @@ function TodosPage({ token }) {
       });
       if (!response.ok) {
         setTodoList(currentTodos);
-        setError("Unable to add Todo");
+        if (response.status === 401) {
+          setError("Unauthorized: Please log in");
+        } else {
+          setError("Failed to mark Todo completed");
+        }
       }
       if (response.ok) {
         const data = await response.json();
@@ -64,7 +68,7 @@ function TodosPage({ token }) {
 
   // Complete todo function
   async function completeTodo(id) {
-    // const currentTodo = todoList.find((todo) => todo.id === id);
+    const rollbackTodo = todoList.find((todo) => todo.id === id);
     const updatedTodoList = todoList.map((todo) => {
       if (todo.id === id) {
         return { ...todo, isCompleted: true };
@@ -82,14 +86,10 @@ function TodosPage({ token }) {
       });
       console.log(response);
       if (!response.ok) {
-        const resetTodoList = todoList.map((todo) => {
-          if (todo.id === id) {
-            return { ...todo, isCompleted: false };
-          } else {
-            return todo;
-          }
-        });
-        setTodoList(resetTodoList);
+        const rollbackTodos = todoList.map((todo) =>
+          todo.id === rollbackTodo.id ? { ...rollbackTodo } : todo,
+        );
+        setTodoList(rollbackTodos);
         if (response.status === 401) {
           setError("Unauthorized: Please log in");
         } else {
@@ -119,11 +119,15 @@ function TodosPage({ token }) {
         }),
       });
       if (!response.ok) {
-        setError("Unable to update Todo");
         const rollbackTodos = todoList.map((todo) =>
           todo.id === rollbackTodo.id ? { ...rollbackTodo } : todo,
         );
         setTodoList(rollbackTodos);
+        if (response.status === 401) {
+          setError("Unauthorized: Please log in");
+        } else {
+          setError("Failed to mark Todo completed");
+        }
       }
     } catch (error) {
       setError(`Error: ${error.name} | ${error.message}`);
