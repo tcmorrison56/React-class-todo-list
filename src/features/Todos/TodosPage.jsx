@@ -58,7 +58,14 @@ function TodosPage({ token }) {
       }
       if (response.ok) {
         const data = await response.json();
-        setTodoList([data, ...currentTodos]);
+        const finalTodos = todoList.map((todo) => {
+          if (todo.id === data.id) {
+            return data;
+          } else {
+            return todo;
+          }
+        });
+        setTodoList(finalTodos);
       }
     } catch (error) {
       //add error message
