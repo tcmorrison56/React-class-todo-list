@@ -22,7 +22,7 @@ function TodosPage({ token }) {
         } else if (response.status === 401) {
           setError(`Unauthorized: ${data?.message}`);
         } else {
-          setError(data?.message);
+          setError(`Unable to load todos: ${data?.message}`);
         }
       } catch (error) {
         setError(`Error: ${error.name} | ${error.message}`);
@@ -48,16 +48,16 @@ function TodosPage({ token }) {
         credentials: "include",
         body: JSON.stringify({ title: todoTitle, isCompleted: false }),
       });
+      const data = await response.json();
       if (!response.ok) {
         setTodoList(currentTodos);
         if (response.status === 401) {
-          setError("Unauthorized: Please log in");
+          setError(`Unauthorized: Please log in ${data?.message}`);
         } else {
-          setError("Failed to mark Todo completed");
+          setError(`Failed to add Todo: ${data?.message}`);
         }
       }
       if (response.ok) {
-        const data = await response.json();
         const finalTodos = todoList.map((todo) => {
           if (todo.id === data.id) {
             return data;
@@ -91,15 +91,16 @@ function TodosPage({ token }) {
         credentials: "include",
         body: JSON.stringify({ isCompleted: true }),
       });
+      const data = await response.json();
       if (!response.ok) {
         const rollbackTodos = todoList.map((todo) =>
           todo.id === rollbackTodo.id ? { ...rollbackTodo } : todo,
         );
         setTodoList(rollbackTodos);
         if (response.status === 401) {
-          setError("Unauthorized: Please log in");
+          setError(`Unauthorized: Please log in ${data?.message}`);
         } else {
-          setError("Failed to mark Todo completed");
+          setError(`Failed to mark Todo completed: ${data?.message}`);
         }
       }
     } catch (error) {
