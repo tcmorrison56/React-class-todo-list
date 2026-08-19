@@ -60,9 +60,9 @@ function TodosPage({ token }) {
           previous.filter((todo) => todo.id !== tempTodo.id),
         );
         if (response.status === 401) {
-          setError(`Unauthorized: Please log in ${data?.message}`);
+          throw new Error(`Unauthorized: Please log in ${data?.message}`);
         } else {
-          setError(`Failed to add Todo: ${data?.message}`);
+          throw new Error(`Failed to add Todo: ${data?.message}`);
         }
       }
       if (response.ok) {
@@ -119,7 +119,7 @@ function TodosPage({ token }) {
         if (response.status === 401) {
           setError(`Unauthorized: Please log in ${data?.message}`);
         } else {
-          setError(`Failed to update Todo: ${data?.message}`);
+          setError(`Failed to mark Todo complete: ${data?.message}`);
         }
       }
     } catch (error) {
@@ -152,7 +152,7 @@ function TodosPage({ token }) {
         if (response.status === 401) {
           setError("Unauthorized: Please log in");
         } else {
-          setError("Failed to mark Todo completed");
+          setError("Failed to update Todo");
         }
       }
     } catch (error) {
