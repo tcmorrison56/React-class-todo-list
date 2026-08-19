@@ -37,7 +37,6 @@ function TodosPage({ token }) {
 
   // Add todo function
   async function addTodo(todoTitle) {
-    const currentTodos = todoList;
     const tempTodo = { id: Date.now(), title: todoTitle, isCompleted: false };
     setTodoList((previous) => [tempTodo, ...previous]);
 
@@ -50,7 +49,11 @@ function TodosPage({ token }) {
       });
       const data = await response.json();
       if (!response.ok) {
-        setTodoList(currentTodos);
+        // Roll back todo by removing the todo with the temp todo id
+        const rollbackTodos = todoList.filter(
+          (todo) => todo.id !== tempTodo.id,
+        );
+        setTodoList(rollbackTodos);
         if (response.status === 401) {
           setError(`Unauthorized: Please log in ${data?.message}`);
         } else {
@@ -59,7 +62,7 @@ function TodosPage({ token }) {
       }
       if (response.ok) {
         const finalTodos = todoList.map((todo) => {
-          if (todo.id === data.id) {
+          if (todo.id === tempTodo.id) {
             return data;
           } else {
             return todo;
