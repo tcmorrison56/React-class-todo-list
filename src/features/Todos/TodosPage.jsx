@@ -51,11 +51,6 @@ function TodosPage({ token }) {
       const data = await response.json();
       if (!response.ok) {
         // --- Roll back todo by removing the todo with the temp todo id ---
-        // const rollbackTodos = todoList.filter(
-        //   (todo) => todo.id !== tempTodo.id,
-        // );
-        // setTodoList(rollbackTodos);
-        console.log(response);
         setTodoList((previous) =>
           previous.filter((todo) => todo.id !== tempTodo.id),
         );
@@ -66,16 +61,6 @@ function TodosPage({ token }) {
         }
       }
       if (response.ok) {
-        // const finalTodos = todoList.map((todo) => {
-        //   if (todo.id === tempTodo.id) {
-        //     return data;
-        //   } else {
-        //     return todo;
-        //   }
-        // });
-        // setTodoList(finalTodos);
-
-        // For AirHub AI reviewer - is this the right way to handle rollback using the most up to date todo information?
         setTodoList((previous) =>
           previous.map((todo) => {
             if (todo.id === tempTodo.id) {
@@ -87,7 +72,6 @@ function TodosPage({ token }) {
         );
       }
     } catch (error) {
-      //add error message
       setError(`Error: ${error.name} | ${error.message}`);
     }
   }
@@ -95,14 +79,14 @@ function TodosPage({ token }) {
   // ---------- Complete todo function ----------
   async function completeTodo(id) {
     const rollbackTodo = todoList.find((todo) => todo.id === id);
-    const updatedTodoList = todoList.map((todo) => {
+    const completedTodoList = todoList.map((todo) => {
       if (todo.id === id) {
         return { ...todo, isCompleted: true };
       } else {
         return todo;
       }
     });
-    setTodoList(updatedTodoList);
+    setTodoList(completedTodoList);
     try {
       const response = await fetch(`/api/tasks/${id}`, {
         method: "PATCH",
@@ -112,14 +96,15 @@ function TodosPage({ token }) {
       });
       const data = await response.json();
       if (!response.ok) {
-        const rollbackTodos = todoList.map((todo) =>
-          todo.id === rollbackTodo.id ? { ...rollbackTodo } : todo,
+        setTodoList((previous) =>
+          previous.map((todo) =>
+            todo.id === rollbackTodo.id ? { ...rollbackTodo } : todo,
+          ),
         );
-        setTodoList(rollbackTodos);
         if (response.status === 401) {
-          setError(`Unauthorized: Please log in ${data?.message}`);
+          throw new Error(`Unauthorized: Please log in ${data?.message}`);
         } else {
-          setError(`Failed to mark Todo complete: ${data?.message}`);
+          throw new Error(`Failed to mark Todo complete: ${data?.message}`);
         }
       }
     } catch (error) {
@@ -145,14 +130,15 @@ function TodosPage({ token }) {
         }),
       });
       if (!response.ok) {
-        const rollbackTodos = todoList.map((todo) =>
-          todo.id === rollbackTodo.id ? { ...rollbackTodo } : todo,
+        setTodoList((previous) =>
+          previous.map((todo) =>
+            todo.id === rollbackTodo.id ? { ...rollbackTodo } : todo,
+          ),
         );
-        setTodoList(rollbackTodos);
         if (response.status === 401) {
-          setError("Unauthorized: Please log in");
+          throw new Error("Unauthorized: Please log in");
         } else {
-          setError("Failed to update Todo");
+          throw new Error("Failed to update Todo");
         }
       }
     } catch (error) {
