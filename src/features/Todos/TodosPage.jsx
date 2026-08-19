@@ -34,10 +34,15 @@ function TodosPage({ token }) {
     if (token) {
       fetchTodos();
     }
+    return () => {
+      setError("");
+      setIsTodoListLoading(false);
+    };
   }, [token]);
 
   // --------- Add todo function ---------
   async function addTodo(todoTitle) {
+    setError("");
     const tempTodo = { id: Date.now(), title: todoTitle, isCompleted: false };
     setTodoList((previous) => [tempTodo, ...previous]);
 
@@ -78,6 +83,7 @@ function TodosPage({ token }) {
 
   // ---------- Complete todo function ----------
   async function completeTodo(id) {
+    setError("");
     const rollbackTodo = todoList.find((todo) => todo.id === id);
     const completedTodoList = todoList.map((todo) => {
       if (todo.id === id) {
@@ -114,6 +120,7 @@ function TodosPage({ token }) {
 
   // ----------- Update todo function ----------
   async function updateTodo(editedTodo) {
+    setError("");
     const rollbackTodo = editedTodo;
     const updatedTodos = todoList.map((todo) =>
       todo.id === editedTodo.id ? { ...editedTodo } : todo,
