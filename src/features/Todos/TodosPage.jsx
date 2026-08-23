@@ -15,12 +15,11 @@ function TodosPage({ token }) {
     const fetchTodos = async () => {
       try {
         setIsTodoListLoading(true);
-        console.log(sortBy, sortDirection);
-        const paramsObject = { sortBy, sortDirection, limit: 100 };
         const params = new URLSearchParams({
-          ...paramsObject,
+          sortBy,
+          sortDirection,
+          limit: 100,
         });
-        console.log(params);
         const response = await fetch(`/api/tasks?${params}`, {
           headers: { "X-CSRF-TOKEN": token },
           credentials: "include",
@@ -160,6 +159,7 @@ function TodosPage({ token }) {
       setError(`Error: ${error.name} | ${error.message}`);
     }
   }
+
   return (
     <>
       {error && (
