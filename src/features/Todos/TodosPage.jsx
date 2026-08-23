@@ -23,7 +23,6 @@ function TodosPage({ token }) {
 
   // ---------- Cache invalidation ------------
   const invalidateCache = useCallback(() => {
-    console.log("Invalidating memo cache after todo mutation");
     setDataVersion((prev) => prev + 1);
   }, []);
 
@@ -204,7 +203,7 @@ function TodosPage({ token }) {
       )}
       {filterError && (
         <div>
-          <p>{filterError.message}</p>
+          <p>{filterError}</p>
           <button onClick={() => setFilterError("")}>Clear Filter Error</button>
           <button
             onClick={() => {
