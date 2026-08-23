@@ -1,18 +1,26 @@
 import { useState, useEffect } from "react";
 import TodoList from "./TodoList/TodoList";
 import TodoForm from "./TodoForm";
+import SortBy from "../../shared/sortBy";
 
 function TodosPage({ token }) {
   const [todoList, setTodoList] = useState([]);
   const [error, setError] = useState("");
   const [isTodoListLoading, setIsTodoListLoading] = useState(false);
+  const [sortBy, setSortBy] = useState("createdAt");
+  const [sortDirection, setSortDirection] = useState("desc");
 
   // ---------- Fetch todos on login ----------
   useEffect(() => {
     const fetchTodos = async () => {
       try {
         setIsTodoListLoading(true);
-        const params = new URLSearchParams({ limit: 100 });
+        console.log(sortBy, sortDirection);
+        const paramsObject = { sortBy, sortDirection, limit: 100 };
+        const params = new URLSearchParams({
+          ...paramsObject,
+        });
+        console.log(params);
         const response = await fetch(`/api/tasks?${params}`, {
           headers: { "X-CSRF-TOKEN": token },
           credentials: "include",
@@ -38,7 +46,7 @@ function TodosPage({ token }) {
       setError("");
       setIsTodoListLoading(false);
     };
-  }, [token]);
+  }, [token, sortBy, sortDirection]);
 
   // --------- Add todo function ---------
   async function addTodo(todoTitle) {
@@ -162,6 +170,12 @@ function TodosPage({ token }) {
       )}
 
       {isTodoListLoading && <p>Loading Todo List...</p>}
+      <SortBy
+        sortBy={sortBy}
+        sortDirection={sortDirection}
+        onSortByChange={setSortBy}
+        onSortDirectionChange={setSortDirection}
+      />
       <TodoForm onAddTodo={addTodo} />
       <TodoList
         todoList={todoList}
