@@ -1,7 +1,7 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import TodoList from "./TodoList/TodoList";
 import TodoForm from "./TodoForm";
-import SortBy from "../../shared/sortBy";
+import SortBy from "../../shared/SortBy";
 import useDebounce from "../../utils/useDebounce";
 import FilterInput from "../../shared/FilterInput";
 
@@ -13,11 +13,18 @@ function TodosPage({ token }) {
   const [sortDirection, setSortDirection] = useState("desc");
   const [filterTerm, setFilterTerm] = useState("");
   const debouncedFilterTerm = useDebounce(filterTerm, 300);
+  const [dataVersion, setDataVersion] = useState(0);
 
   // ---------- Filter handler function ----------
   const handleFilterChange = (newTerm) => {
     setFilterTerm(newTerm);
   };
+
+  // ---------- Cache invalidation ------------
+  const invalidateCache = useCallback(() => {
+    console.log("Invalidating memo cache after todo mutation");
+    setDataVersion((prev) => prev + 1);
+  }, []);
 
   // ---------- Fetch todos on login ----------
   useEffect(() => {
@@ -91,6 +98,7 @@ function TodosPage({ token }) {
             }
           }),
         );
+        invalidateCache();
       }
     } catch (error) {
       setError(`Error: ${error.name} | ${error.message}`);
@@ -129,6 +137,9 @@ function TodosPage({ token }) {
           throw new Error(`Failed to mark Todo complete: ${data?.message}`);
         }
       }
+      if (response.ok) {
+        invalidateCache();
+      }
     } catch (error) {
       setError(`Error: ${error.name} | ${error.message}`);
     }
@@ -163,6 +174,9 @@ function TodosPage({ token }) {
         } else {
           throw new Error("Failed to update Todo");
         }
+      }
+      if (response.ok) {
+        invalidateCache();
       }
     } catch (error) {
       setError(`Error: ${error.name} | ${error.message}`);
