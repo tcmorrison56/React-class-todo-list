@@ -208,6 +208,7 @@ function TodosPage({ token }) {
         todoList={todoList}
         onCompleteTodo={completeTodo}
         onUpdateTodo={updateTodo}
+        dataVersion={dataVersion}
       />
     </>
   );
