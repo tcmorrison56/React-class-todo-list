@@ -183,7 +183,7 @@ function TodosPage({ token }) {
   // --------- Data Version Pattern ----------
   const invalidateCache = useCallback(() => {
     setDataVersion((prev) => prev + 1);
-    console.log("Invalidatoin emmo cache after todo mutation");
+    console.log("Invalidating memo cache after todo mutation");
   }, []);
 
   return (

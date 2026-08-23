@@ -13,7 +13,7 @@ export default function SortBy({
   }
 
   return (
-    <form>
+    <>
       <label>
         Sort By
         <select value={sortBy} onChange={handleByChange}>
@@ -28,6 +28,6 @@ export default function SortBy({
           <option value="asc">Ascending</option>
         </select>
       </label>
-    </form>
+    </>
   );
 }
