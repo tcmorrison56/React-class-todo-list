@@ -2,8 +2,10 @@ import { useMemo } from "react";
 import TodoListItem from "./TodoListItem";
 
 function TodoList({ todoList, onCompleteTodo, onUpdateTodo, dataVersion }) {
+  // console.log(todoList, dataVersion);
   const filteredTodoList = useMemo(() => {
-    const filteredTodos = todoList.filter((todo) => todo.isCompleted === false);
+    const todos = Array.isArray(todoList) ? todoList : todoList?.tasks || [];
+    const filteredTodos = todos.filter((todo) => todo.isCompleted === false);
     return { version: dataVersion, todos: filteredTodos };
   }, [todoList, dataVersion]);
   return filteredTodoList.todos.length === 0 ? (

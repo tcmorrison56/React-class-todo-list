@@ -38,6 +38,7 @@ export const initialTodoState = {
 };
 
 export function todoReducer(state, action) {
+  console.log("Dispatched action:", action.type, action.payload);
   switch (action.type) {
     // fetch todo operations
     case TODO_ACTIONS.FETCH_START:
@@ -52,14 +53,15 @@ export function todoReducer(state, action) {
       return {
         ...state,
         isTodoListLoading: false,
-        todoList: action.payload,
+        todoList: action.payload.data,
       };
 
     case TODO_ACTIONS.FETCH_ERROR:
       return {
         ...state,
         isTodoListLoading: false,
-        error: action.payload.message,
+        error: action.payload.error,
+        filterError: action.payload.filterError,
       };
 
     // add todo operations
@@ -98,7 +100,7 @@ export function todoReducer(state, action) {
     case TODO_ACTIONS.COMPLETE_TODO_SUCCESS:
       return {
         ...state,
-        dataVersion: state.dataVersion + 1,
+        dataVersion: state.dataVersion++,
       };
 
     case TODO_ACTIONS.COMPLETE_TODO_ERROR:
@@ -109,7 +111,7 @@ export function todoReducer(state, action) {
             ? { ...action.payload.rollbackTodo }
             : todo,
         ),
-        error: action.payload.message,
+        error: action.payload.error,
       };
 
     // update todo operations
@@ -123,13 +125,13 @@ export function todoReducer(state, action) {
     case TODO_ACTIONS.UPDATE_TODO_SUCCESS:
       return {
         ...state,
-        dataVersion: state.dataVersion + 1,
+        dataVersion: state.dataVersion++,
       };
 
     case TODO_ACTIONS.UPDATE_TODO_ERROR:
       return {
         ...state,
-        error: action.payload.message,
+        error: action.payload.error,
         todoList: state.todoList.map((todo) =>
           todo.id === action.payload.rollbackTodo.id
             ? { ...action.payload.rollbackTodo }
@@ -148,7 +150,7 @@ export function todoReducer(state, action) {
     case TODO_ACTIONS.SET_FILTER:
       return {
         ...state,
-        filterTerm: action.payload.filter,
+        filterTerm: action.payload.term,
       };
 
     case TODO_ACTIONS.CLEAR_ERROR:
@@ -156,6 +158,7 @@ export function todoReducer(state, action) {
         ...state,
         error: "",
         filterError: "",
+        isTodoListLoading: false,
       };
 
     case TODO_ACTIONS.RESET_FILTERS:
