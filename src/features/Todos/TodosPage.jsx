@@ -68,10 +68,11 @@ function TodosPage() {
             payload: { error: null, filterError: error },
           });
         } else {
-          dispatch({
-            type: TODO_ACTIONS.FETCH_ERROR,
-            payload: { error: error, filterError: null },
-          });
+          // dispatch({
+          //   type: TODO_ACTIONS.FETCH_ERROR,
+          //   payload: { error: error, filterError: null },
+          // });
+          dispatch({ type: TODO_ACTIONS.RESET_FILTERS });
         }
       }
     };
@@ -169,7 +170,6 @@ function TodosPage() {
   // ----------- Update todo function ----------
   async function updateTodo(editedTodo) {
     const rollbackTodo = editedTodo;
-    console.log(todoState.todoList, todoState);
     const updatedTodos = todoState.todoList.map((todo) =>
       todo.id === editedTodo.id ? { ...editedTodo } : todo,
     );
