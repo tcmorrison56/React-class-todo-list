@@ -157,6 +157,12 @@ export function todoReducer(state, action) {
       return {
         ...state,
         error: "",
+        isTodoListLoading: false,
+      };
+
+    case TODO_ACTIONS.CLEAR__FILTER_ERROR:
+      return {
+        ...state,
         filterError: "",
         isTodoListLoading: false,
       };
@@ -165,7 +171,7 @@ export function todoReducer(state, action) {
       return {
         ...state,
         sortBy: "createdAt",
-        sortDirection: "desc",
+        sortDirection: "asc",
         filterTerm: "",
         filterError: "",
       };

@@ -16,11 +16,9 @@ function TodosPage() {
   const [todoState, dispatch] = useReducer(todoReducer, initialTodoState);
   const debouncedFilterTerm = useDebounce(todoState.filterTerm, 300);
   const { token } = useAuth();
-  // const todoList = todoState.todoList.tasks;
 
   // ---------- Filter handler function ----------
   const handleFilterChange = (newTerm) => {
-    // setFilterTerm(newTerm);
     dispatch({ type: TODO_ACTIONS.SET_FILTER, payload: { term: newTerm } });
   };
 
@@ -28,15 +26,10 @@ function TodosPage() {
 
   // REPLACED WITH REDUCER DISPATCH?
 
-  // const invalidateCache = useCallback(() => {
-  //   setDataVersion((prev) => prev + 1);
-  // }, []);
-
   // ---------- Fetch todos on login ----------
   useEffect(() => {
     const fetchTodos = async () => {
       try {
-        // setIsTodoListLoading(true);
         dispatch({ type: TODO_ACTIONS.FETCH_START });
         const paramsObj = {
           sortBy: todoState.sortBy,
@@ -60,9 +53,6 @@ function TodosPage() {
 
           throw new Error(message);
         }
-        // setTodoList(data.tasks);
-        // setFilterError("");
-        console.log(data);
         dispatch({
           type: TODO_ACTIONS.FETCH_SUCCESS,
           payload: { data: data.tasks },
@@ -73,27 +63,22 @@ function TodosPage() {
           todoState.sortBy !== "createdAt" ||
           todoState.sortDirection !== "desc"
         ) {
-          // setFilterError(`Error filtering/sorting todos: ${error.message}`);
           dispatch({
             type: TODO_ACTIONS.FETCH_ERROR,
             payload: { error: null, filterError: error },
           });
         } else {
-          // setError(`Error fetching todos: ${error.message}`);
           dispatch({
             type: TODO_ACTIONS.FETCH_ERROR,
             payload: { error: error, filterError: null },
           });
         }
-        // setError(`Error: ${error.name} | ${error.message}`);
       }
     };
     if (token) {
       fetchTodos();
     }
     return () => {
-      // setError("");
-      // setIsTodoListLoading(false);
       dispatch({ type: TODO_ACTIONS.CLEAR_ERROR });
     };
   }, [
@@ -106,9 +91,7 @@ function TodosPage() {
 
   // --------- Add todo function ---------
   async function addTodo(todoTitle) {
-    // setError("");
     const tempTodo = { id: Date.now(), title: todoTitle, isCompleted: false };
-    // setTodoList((previous) => [tempTodo, ...previous]);
     dispatch({ type: TODO_ACTIONS.ADD_TODO_START, payload: tempTodo });
 
     try {
@@ -120,10 +103,6 @@ function TodosPage() {
       });
       const data = await response.json();
       if (!response.ok) {
-        // --- Roll back todo by removing the todo with the temp todo id ---
-        // setTodoList((previous) =>
-        //   previous.filter((todo) => todo.id !== tempTodo.id),
-        // );
         const message =
           response.status === 401
             ? `Unauthorized: Please log in ${data?.message}`
@@ -132,16 +111,6 @@ function TodosPage() {
       }
 
       if (response.ok) {
-        // setTodoList((previous) =>
-        //   previous.map((todo) => {
-        //     if (todo.id === tempTodo.id) {
-        //       return data;
-        //     } else {
-        //       return todo;
-        //     }
-        //   }),
-        // );
-        // invalidateCache();
         dispatch({
           type: TODO_ACTIONS.ADD_TODO_SUCCESS,
           payload: { tempId: tempTodo.id, data: data },
@@ -150,15 +119,13 @@ function TodosPage() {
     } catch (error) {
       dispatch({
         type: TODO_ACTIONS.ADD_TODO_ERROR,
-        payload: { error: error },
+        payload: { error: error, tempId: tempTodo.id },
       });
     }
   }
 
   // ---------- Complete todo function ----------
   async function completeTodo(id) {
-    // setError("");
-    console.log(todoState.todoList);
     const rollbackTodo = todoState.todoList.find((todo) => todo.id === id);
     const completedTodoList = todoState.todoList.map((todo) => {
       if (todo.id === id) {
@@ -167,7 +134,7 @@ function TodosPage() {
         return todo;
       }
     });
-    // setTodoList(completedTodoList);
+
     dispatch({
       type: TODO_ACTIONS.COMPLETE_TODO_START,
       payload: { completedTodos: completedTodoList },
@@ -181,23 +148,16 @@ function TodosPage() {
       });
       const data = await response.json();
       if (!response.ok) {
-        // setTodoList((previous) =>
-        //   previous.map((todo) =>
-        //     todo.id === rollbackTodo.id ? { ...rollbackTodo } : todo,
-        //   ),
-        // );
-        if (response.status === 401) {
-          throw new Error(`Unauthorized: Please log in ${data?.message}`);
-        } else {
-          throw new Error(`Failed to mark Todo complete: ${data?.message}`);
-        }
+        const message =
+          response.status === 401
+            ? `Unauthorized: Please log in ${data?.message}`
+            : `Failed to mark Todo complete: ${data?.message}`;
+        throw new Error(message);
       }
       if (response.ok) {
-        // invalidateCache();
         dispatch({ type: TODO_ACTIONS.COMPLETE_TODO_SUCCESS });
       }
     } catch (error) {
-      // setError(`Error: ${error.name} | ${error.message}`);
       dispatch({
         type: TODO_ACTIONS.COMPLETE_TODO_ERROR,
         payload: { rollbackTodo },
@@ -208,13 +168,11 @@ function TodosPage() {
 
   // ----------- Update todo function ----------
   async function updateTodo(editedTodo) {
-    // setError("");
     const rollbackTodo = editedTodo;
     console.log(todoState.todoList, todoState);
     const updatedTodos = todoState.todoList.map((todo) =>
       todo.id === editedTodo.id ? { ...editedTodo } : todo,
     );
-    // setTodoList(updatedTodos);
     dispatch({
       type: TODO_ACTIONS.UPDATE_TODO_START,
       payload: { updatedTodos },
@@ -230,11 +188,6 @@ function TodosPage() {
         }),
       });
       if (!response.ok) {
-        // setTodoList((previous) =>
-        //   previous.map((todo) =>
-        //     todo.id === rollbackTodo.id ? { ...rollbackTodo } : todo,
-        //   ),
-        // );
         const message =
           response.status === 401
             ? "Unauthorized: Please log in"
@@ -242,11 +195,9 @@ function TodosPage() {
         throw new Error(message);
       }
       if (response.ok) {
-        // invalidateCache();
         dispatch({ type: TODO_ACTIONS.UPDATE_TODO_SUCCESS });
       }
     } catch (error) {
-      // setError(`Error: ${error.name} | ${error.message}`);
       dispatch({
         type: TODO_ACTIONS.UPDATE_TODO_ERROR,
         payload: { rollbackTodo, error },
@@ -267,15 +218,13 @@ function TodosPage() {
       {todoState.filterError && (
         <div>
           <p>{todoState.filterError}</p>
-          <button onClick={() => dispatch({ type: TODO_ACTIONS.CLEAR_ERROR })}>
+          <button
+            onClick={() => dispatch({ type: TODO_ACTIONS.CLEAR_FILTER_ERROR })}
+          >
             Clear Filter Error
           </button>
           <button
             onClick={() => {
-              // setFilterTerm("");
-              // setSortBy("createdAt");
-              // setSortDirection("desc");
-              // setFilterError("");
               dispatch({ type: TODO_ACTIONS.RESET_FILTERS });
             }}
           >
