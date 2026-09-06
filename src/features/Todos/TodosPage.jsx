@@ -80,7 +80,6 @@ function TodosPage() {
     }
     return () => {
       dispatch({ type: TODO_ACTIONS.CLEAR_ERROR });
-      // dispatch({ type: TODO_ACTIONS.RESET_FILTERS });
     };
   }, [
     token,
