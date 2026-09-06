@@ -19,7 +19,7 @@ export default function Logoff() {
   return (
     <div>
       {error && <p>{error}</p>}
-      <button onClick={handleClick} disable={!!isLoggingOff}>
+      <button onClick={handleClick} disabled={isLoggingOff}>
         {isLoggingOff ? "Logging Off..." : "Log Off"}
       </button>
     </div>
