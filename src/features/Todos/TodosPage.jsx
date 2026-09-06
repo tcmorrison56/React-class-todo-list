@@ -2,17 +2,20 @@ import { useEffect, useReducer } from "react";
 import TodoList from "./TodoList/TodoList";
 import TodoForm from "./TodoForm";
 import SortBy from "../../shared/SortBy";
-import useDebounce from "../../utils/useDebounce";
 import FilterInput from "../../shared/FilterInput";
+import Logoff from "../Logoff";
+import useDebounce from "../../utils/useDebounce";
+import { useAuth } from "../../contexts/AuthContext";
 import {
   TODO_ACTIONS,
   initialTodoState,
   todoReducer,
 } from "../../reducers/todoReducer";
 
-function TodosPage({ token }) {
+function TodosPage() {
   const [todoState, dispatch] = useReducer(todoReducer, initialTodoState);
   const debouncedFilterTerm = useDebounce(todoState.filterTerm, 300);
+  const { token } = useAuth();
   // const todoList = todoState.todoList.tasks;
 
   // ---------- Filter handler function ----------
@@ -312,6 +315,7 @@ function TodosPage({ token }) {
         onUpdateTodo={updateTodo}
         dataVersion={todoState.dataVersion}
       />
+      <Logoff />
     </>
   );
 }
