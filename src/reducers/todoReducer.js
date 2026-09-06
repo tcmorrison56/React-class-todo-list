@@ -30,9 +30,9 @@ export const initialTodoState = {
   todoList: [],
   error: "",
   filterError: "",
-  isTodoListLoading: false,
+  isTodoListLoading: true,
   sortBy: "createdAt",
-  sortDirection: "desc",
+  sortDirection: "asc",
   filterTerm: "",
   dataVersion: 0,
 };
@@ -100,7 +100,7 @@ export function todoReducer(state, action) {
     case TODO_ACTIONS.COMPLETE_TODO_SUCCESS:
       return {
         ...state,
-        dataVersion: state.dataVersion++,
+        dataVersion: state.dataVersion + 1,
       };
 
     case TODO_ACTIONS.COMPLETE_TODO_ERROR:
@@ -125,7 +125,7 @@ export function todoReducer(state, action) {
     case TODO_ACTIONS.UPDATE_TODO_SUCCESS:
       return {
         ...state,
-        dataVersion: state.dataVersion++,
+        dataVersion: state.dataVersion + 1,
       };
 
     case TODO_ACTIONS.UPDATE_TODO_ERROR:
@@ -164,7 +164,7 @@ export function todoReducer(state, action) {
     case TODO_ACTIONS.RESET_FILTERS:
       return {
         ...state,
-        sortBy: "createAt",
+        sortBy: "createdAt",
         sortDirection: "desc",
         filterTerm: "",
         filterError: "",
