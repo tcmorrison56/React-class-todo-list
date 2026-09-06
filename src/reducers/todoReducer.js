@@ -39,7 +39,6 @@ export const initialTodoState = {
 };
 
 export function todoReducer(state, action) {
-  console.log("Dispatched action:", action.type, action.payload);
   switch (action.type) {
     // fetch todo operations
     case TODO_ACTIONS.FETCH_START:
@@ -54,7 +53,7 @@ export function todoReducer(state, action) {
       return {
         ...state,
         isTodoListLoading: false,
-        todoList: action.payload.data,
+        todoList: action.payload.todos,
       };
 
     case TODO_ACTIONS.FETCH_ERROR:
@@ -161,7 +160,7 @@ export function todoReducer(state, action) {
         isTodoListLoading: false,
       };
 
-    case TODO_ACTIONS.CLEAR__FILTER_ERROR:
+    case TODO_ACTIONS.CLEAR_FILTER_ERROR:
       return {
         ...state,
         filterError: "",

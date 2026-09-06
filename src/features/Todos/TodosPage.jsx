@@ -55,24 +55,23 @@ function TodosPage() {
         }
         dispatch({
           type: TODO_ACTIONS.FETCH_SUCCESS,
-          payload: { data: data.tasks },
+          payload: { todos: data.tasks },
         });
       } catch (error) {
         if (
           debouncedFilterTerm ||
           todoState.sortBy !== "createdAt" ||
-          todoState.sortDirection !== "desc"
+          todoState.sortDirection !== "asc"
         ) {
           dispatch({
             type: TODO_ACTIONS.FETCH_ERROR,
-            payload: { error: null, filterError: error },
+            payload: { error: null, filterError: error.message },
           });
         } else {
-          // dispatch({
-          //   type: TODO_ACTIONS.FETCH_ERROR,
-          //   payload: { error: error, filterError: null },
-          // });
-          dispatch({ type: TODO_ACTIONS.RESET_FILTERS });
+          dispatch({
+            type: TODO_ACTIONS.FETCH_ERROR,
+            payload: { error: error.message, filterError: null },
+          });
         }
       }
     };
@@ -81,6 +80,7 @@ function TodosPage() {
     }
     return () => {
       dispatch({ type: TODO_ACTIONS.CLEAR_ERROR });
+      // dispatch({ type: TODO_ACTIONS.RESET_FILTERS });
     };
   }, [
     token,
