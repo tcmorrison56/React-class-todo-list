@@ -22,10 +22,6 @@ function TodosPage() {
     dispatch({ type: TODO_ACTIONS.SET_FILTER, payload: { term: newTerm } });
   };
 
-  // ---------- Cache invalidation ------------
-
-  // REPLACED WITH REDUCER DISPATCH?
-
   // ---------- Fetch todos on login ----------
   useEffect(() => {
     const fetchTodos = async () => {
