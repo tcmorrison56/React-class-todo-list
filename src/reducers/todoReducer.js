@@ -106,12 +106,12 @@ export function todoReducer(state, action) {
     case TODO_ACTIONS.COMPLETE_TODO_ERROR:
       return {
         ...state,
+        error: action.payload.error,
         todoList: state.todoList.map((todo) =>
           todo.id === action.payload.rollbackTodo.id
             ? { ...action.payload.rollbackTodo }
             : todo,
         ),
-        error: action.payload.error,
       };
 
     // update todo operations
@@ -157,14 +157,12 @@ export function todoReducer(state, action) {
       return {
         ...state,
         error: "",
-        isTodoListLoading: false,
       };
 
     case TODO_ACTIONS.CLEAR_FILTER_ERROR:
       return {
         ...state,
         filterError: "",
-        isTodoListLoading: false,
       };
 
     case TODO_ACTIONS.RESET_FILTERS:

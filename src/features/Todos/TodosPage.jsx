@@ -65,12 +65,12 @@ function TodosPage() {
         ) {
           dispatch({
             type: TODO_ACTIONS.FETCH_ERROR,
-            payload: { error: null, filterError: error.message },
+            payload: { error: "", filterError: error.message },
           });
         } else {
           dispatch({
             type: TODO_ACTIONS.FETCH_ERROR,
-            payload: { error: error.message, filterError: null },
+            payload: { error: error.message, filterError: "" },
           });
         }
       }
