@@ -53,6 +53,7 @@ export function todoReducer(state, action) {
       return {
         ...state,
         isTodoListLoading: false,
+        error: "",
         todoList: action.payload.todos,
       };
 
