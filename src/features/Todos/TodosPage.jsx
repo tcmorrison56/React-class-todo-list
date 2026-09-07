@@ -119,7 +119,7 @@ function TodosPage() {
     } catch (error) {
       dispatch({
         type: TODO_ACTIONS.ADD_TODO_ERROR,
-        payload: { error: error, tempId: tempTodo.id },
+        payload: { error: error.message, tempId: tempTodo.id },
       });
     }
   }
@@ -160,15 +160,16 @@ function TodosPage() {
     } catch (error) {
       dispatch({
         type: TODO_ACTIONS.COMPLETE_TODO_ERROR,
-        payload: { rollbackTodo },
-        error: error,
+        payload: { error: error.message, rollbackTodo },
       });
     }
   }
 
   // ----------- Update todo function ----------
   async function updateTodo(editedTodo) {
-    const rollbackTodo = editedTodo;
+    const rollbackTodo = todoState.todoList.find(
+      (todo) => todo.id === editedTodo.id,
+    );
     const updatedTodos = todoState.todoList.map((todo) =>
       todo.id === editedTodo.id ? { ...editedTodo } : todo,
     );
@@ -199,7 +200,7 @@ function TodosPage() {
     } catch (error) {
       dispatch({
         type: TODO_ACTIONS.UPDATE_TODO_ERROR,
-        payload: { rollbackTodo, error },
+        payload: { error: error.message, rollbackTodo },
       });
     }
   }

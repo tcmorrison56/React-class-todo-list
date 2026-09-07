@@ -64,6 +64,9 @@ export function AuthProvider({ children }) {
       const res = await fetch("/api/users/logoff", options);
       const data = await res.json();
 
+      setEmail("");
+      setToken("");
+
       if (res.status === 200) {
         return {
           success: true,
@@ -75,13 +78,12 @@ export function AuthProvider({ children }) {
         };
       }
     } catch (error) {
+      setEmail("");
+      setToken("");
       return {
         success: false,
         error: `Failed to logout: ${error}`,
       };
-    } finally {
-      setEmail("");
-      setToken("");
     }
   };
 
