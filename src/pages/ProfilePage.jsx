@@ -11,11 +11,19 @@ function ProfilePage() {
     const fetchProfileData = async () => {
       try {
         setIsLoading(true);
-        const params = new URLSearchParams({ limit: 100 });
-        const response = await fetch(`/api/tasks?${params}`, {
+        setError("");
+
+        const options = {
+          method: "GET",
           headers: { "X-CSRF-TOKEN": token },
           credentials: "include",
-        });
+        };
+        const params = new URLSearchParams({ limit: 100 });
+        const response = await fetch(`/api/tasks?${params}`, options);
+
+        if (response.status === 401) {
+          throw new Error("Unauthorized");
+        }
         if (!response.ok) {
           throw new Error("Failed to fetch profile data");
         }
@@ -29,7 +37,7 @@ function ProfilePage() {
 
         setTodoStats({ total, completed, active });
       } catch (error) {
-        setError(error);
+        setError(`Error loading statistics: ${error.message}`);
       } finally {
         setIsLoading(false);
       }
