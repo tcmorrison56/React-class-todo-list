@@ -7,7 +7,7 @@ import LoginPage from "./pages/LoginPage";
 import TodosPage from "./pages/TodosPage";
 import AboutPage from "./pages/AboutPage";
 import ProfilePage from "./pages/ProfilePage";
-import NotFound from "./pages/NotFound";
+import NotFoundPage from "./pages/NotFoundPage";
 import RequireAuth from "./components/RequireAuth";
 
 function App() {
@@ -34,7 +34,7 @@ function App() {
             </RequireAuth>
           }
         />
-        <Route path="*" element={<NotFound />} />
+        <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </div>
   );

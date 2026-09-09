@@ -37,7 +37,7 @@ function ProfilePage() {
 
         setTodoStats({ total, completed, active });
       } catch (error) {
-        setError(`Error loading statistics: ${error.message}`);
+        setError(`Error loading statistics: ${error}`);
       } finally {
         setIsLoading(false);
       }
