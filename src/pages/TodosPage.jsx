@@ -3,7 +3,6 @@ import TodoList from "../features/Todos/TodoList/TodoList";
 import TodoForm from "../features/Todos/TodoForm";
 import SortBy from "../shared/SortBy";
 import FilterInput from "../shared/FilterInput";
-import Logoff from "../features/Logoff";
 import useDebounce from "../utils/useDebounce";
 import { useAuth } from "../contexts/AuthContext";
 import {
@@ -11,7 +10,6 @@ import {
   initialTodoState,
   todoReducer,
 } from "../reducers/todoReducer";
-import { Link } from "react-router";
 
 function TodosPage() {
   const [todoState, dispatch] = useReducer(todoReducer, initialTodoState);
@@ -261,8 +259,6 @@ function TodosPage() {
         onUpdateTodo={updateTodo}
         dataVersion={todoState.dataVersion}
       />
-      <Link to="/profile">Profile</Link>
-      <Logoff />
     </>
   );
 }
