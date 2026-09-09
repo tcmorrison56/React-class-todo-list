@@ -11,7 +11,7 @@ function RequireAuth({ children }) {
     if (!isAuthenticated) {
       navigate("/login", { state: { from: location } });
     }
-  }, [children, isAuthenticated, location, navigate]);
+  }, [isAuthenticated, location, navigate]);
 
   return <>{isAuthenticated ? children : <p>Loading...</p>}</>;
 }
