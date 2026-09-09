@@ -19,6 +19,7 @@ function TodoList({
         filteredTodos = todoList.filter((todo) => !todo.isCompleted);
         break;
       case "all":
+      default:
         filteredTodos = todoList;
         break;
     }
