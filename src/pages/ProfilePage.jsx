@@ -34,8 +34,10 @@ function ProfilePage() {
         const total = todos.length;
         const completed = todos.filter((todo) => todo.isCompleted).length;
         const active = total - completed;
+        const completePercent =
+          total > 0 ? Math.round((completed / total) * 100) : null;
 
-        setTodoStats({ total, completed, active });
+        setTodoStats({ total, completed, active, completePercent });
       } catch (error) {
         setError(`Error loading statistics: ${error}`);
       } finally {
@@ -50,7 +52,7 @@ function ProfilePage() {
   return (
     <div>
       <h2>Profile</h2>
-      {error && <p>{error.message}</p>}
+      {error && <p>{error}</p>}
       {isLoading && <p>Loading profile...</p>}
       <p>Welcome {email}</p>
       {!isLoading && !error && (
@@ -58,6 +60,9 @@ function ProfilePage() {
           <p>Total todos: {todoStats.total}</p>
           <p>Completed todos: {todoStats.completed}</p>
           <p>Active todos: {todoStats.active}</p>
+          {todoStats.total > 0 && (
+            <p>Todo completion percentage: {todoStats.completePercent}</p>
+          )}
         </>
       )}
     </div>

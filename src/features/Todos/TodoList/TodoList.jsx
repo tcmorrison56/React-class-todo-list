@@ -8,7 +8,6 @@ function TodoList({
   dataVersion,
   statusFilter = "active",
 }) {
-  // console.log(todoList, dataVersion);
   const filteredTodoList = useMemo(() => {
     let filteredTodos;
     switch (statusFilter) {
