@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useAuth } from "../contexts/AuthContext";
 
 function ProfilePage() {
-  const { email, token } = useAuth();
+  const { email, token, isAuthenticated } = useAuth();
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [todoStats, setTodoStats] = useState({});
@@ -55,13 +55,14 @@ function ProfilePage() {
       {error && <p>{error}</p>}
       {isLoading && <p>Loading profile...</p>}
       <p>Welcome {email}</p>
+      <p>Status: {isAuthenticated ? "Authenticated" : "Unauthorized"}</p>
       {!isLoading && !error && (
         <>
           <p>Total todos: {todoStats.total}</p>
           <p>Completed todos: {todoStats.completed}</p>
           <p>Active todos: {todoStats.active}</p>
           {todoStats.total > 0 && (
-            <p>Todo completion percentage: {todoStats.completePercent}</p>
+            <p>Todo completion percentage: {todoStats.completePercent}%</p>
           )}
         </>
       )}
