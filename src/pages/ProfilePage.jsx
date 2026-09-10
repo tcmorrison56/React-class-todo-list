@@ -1,0 +1,73 @@
+import { useEffect, useState } from "react";
+import { useAuth } from "../contexts/AuthContext";
+
+function ProfilePage() {
+  const { email, token, isAuthenticated } = useAuth();
+  const [error, setError] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [todoStats, setTodoStats] = useState({});
+
+  useEffect(() => {
+    const fetchProfileData = async () => {
+      try {
+        setIsLoading(true);
+        setError("");
+
+        const options = {
+          method: "GET",
+          headers: { "X-CSRF-TOKEN": token },
+          credentials: "include",
+        };
+        const params = new URLSearchParams({ limit: 100 });
+        const response = await fetch(`/api/tasks?${params}`, options);
+
+        if (response.status === 401) {
+          throw new Error("Unauthorized");
+        }
+        if (!response.ok) {
+          throw new Error("Failed to fetch profile data");
+        }
+        const data = await response.json();
+        const todos = data.tasks;
+
+        // calculate todo stats
+        const total = todos.length;
+        const completed = todos.filter((todo) => todo.isCompleted).length;
+        const active = total - completed;
+        const completePercent =
+          total > 0 ? Math.round((completed / total) * 100) : null;
+
+        setTodoStats({ total, completed, active, completePercent });
+      } catch (error) {
+        setError(`Error loading statistics: ${error}`);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    if (token) {
+      fetchProfileData();
+    }
+  }, [token]);
+
+  return (
+    <div>
+      <h2>Profile</h2>
+      {error && <p>{error}</p>}
+      {isLoading && <p>Loading profile...</p>}
+      <p>Welcome {email}</p>
+      <p>Status: {isAuthenticated ? "Authenticated" : "Unauthorized"}</p>
+      {!isLoading && !error && (
+        <>
+          <p>Total todos: {todoStats.total}</p>
+          <p>Completed todos: {todoStats.completed}</p>
+          <p>Active todos: {todoStats.active}</p>
+          {todoStats.total > 0 && (
+            <p>Todo completion percentage: {todoStats.completePercent}%</p>
+          )}
+        </>
+      )}
+    </div>
+  );
+}
+
+export default ProfilePage;
