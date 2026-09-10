@@ -4,7 +4,7 @@ import { useAuth } from "../contexts/AuthContext";
 function ProfilePage() {
   const { email, token, isAuthenticated } = useAuth();
   const [error, setError] = useState(null);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [todoStats, setTodoStats] = useState({});
 
   useEffect(() => {
