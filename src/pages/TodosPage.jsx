@@ -232,17 +232,17 @@ function TodosPage() {
   }
 
   return (
-    <>
+    <div className={styles.page}>
       {todoState.error && (
-        <>
+        <div className={styles.errorBanner}>
           <p>{todoState.error}</p>
           <button onClick={() => dispatch({ type: TODO_ACTIONS.CLEAR_ERROR })}>
             Clear Error
           </button>
-        </>
+        </div>
       )}
       {todoState.filterError && (
-        <div>
+        <div className={styles.errorBanner}>
           <p>{todoState.filterError}</p>
           <button
             onClick={() => dispatch({ type: TODO_ACTIONS.CLEAR_FILTER_ERROR })}
@@ -259,32 +259,39 @@ function TodosPage() {
         </div>
       )}
 
-      {todoState.isTodoListLoading && <p>Loading Todo List...</p>}
-      <SortBy
-        sortBy={todoState.sortBy}
-        sortDirection={todoState.sortDirection}
-        onSortByChange={(newSortBy) =>
-          dispatch({
-            type: TODO_ACTIONS.SET_SORT,
-            payload: {
-              sortBy: newSortBy,
-              sortDirection: todoState.sortDirection,
-            },
-          })
-        }
-        onSortDirectionChange={(newSortDir) =>
-          dispatch({
-            type: TODO_ACTIONS.SET_SORT,
-            payload: { sortBy: todoState.sortBy, sortDirection: newSortDir },
-          })
-        }
-      />
-      <StatusFilter />
-      <FilterInput
-        filterTerm={todoState.filterTerm}
-        onFilterChange={handleFilterChange}
-      />
+      {todoState.isTodoListLoading && (
+        <p className={styles.loading}>Loading Todo List...</p>
+      )}
+
       <TodoForm onAddTodo={addTodo} />
+
+      <div className={styles.toolbar}>
+        <SortBy
+          sortBy={todoState.sortBy}
+          sortDirection={todoState.sortDirection}
+          onSortByChange={(newSortBy) =>
+            dispatch({
+              type: TODO_ACTIONS.SET_SORT,
+              payload: {
+                sortBy: newSortBy,
+                sortDirection: todoState.sortDirection,
+              },
+            })
+          }
+          onSortDirectionChange={(newSortDir) =>
+            dispatch({
+              type: TODO_ACTIONS.SET_SORT,
+              payload: { sortBy: todoState.sortBy, sortDirection: newSortDir },
+            })
+          }
+        />
+        <StatusFilter />
+        <FilterInput
+          filterTerm={todoState.filterTerm}
+          onFilterChange={handleFilterChange}
+        />
+      </div>
+
       <TodoList
         todoList={todoState.todoList}
         onCompleteTodo={completeTodo}
@@ -294,7 +301,7 @@ function TodosPage() {
         statusFilter={statusFilter}
         filterTerm={todoState.filterTerm}
       />
-    </>
+    </div>
   );
 }
 

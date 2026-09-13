@@ -13,7 +13,7 @@
   align-self: flex-start;
   padding: var(--spacing-sm) var(--spacing-lg);
   font-family: var(--font-family-base);
-  font-size: 0.95rem;
+  font-size: var(--font-size-base);
   font-weight: 600;
   color: var(--color-accent-contrast);
   background-color: var(--color-accent);

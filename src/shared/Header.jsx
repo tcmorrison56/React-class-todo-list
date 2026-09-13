@@ -4,17 +4,16 @@ import Logoff from "../features/Logoff";
 import styles from "./Header.module.css";
 
 export default function Header() {
-  const { isAuthenticated, email } = useAuth();
+  const { isAuthenticated } = useAuth();
   return (
     <header className={styles.header}>
-      <h1 className={styles.title}>Todo List</h1>
-      <Navigation />
-      {isAuthenticated && (
-        <div className={styles.userRow}>
-          <p className={styles.welcome}>Welcome {email}</p>
-          <Logoff />
+      <div className={styles.inner}>
+        <h1 className={styles.title}>Todo List</h1>
+        <div className={styles.navRow}>
+          <Navigation />
+          {isAuthenticated && <Logoff />}
         </div>
-      )}
+      </div>
     </header>
   );
 }

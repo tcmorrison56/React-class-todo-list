@@ -3,31 +3,37 @@ import styles from "./AboutPage.module.css";
 
 function AboutPage() {
   return (
-    <div>
-      <h2>About Todo App</h2>
-      <p>
+    <div className={styles.page}>
+      <h2 className={styles.heading}>About Todo App</h2>
+      <p className={styles.intro}>
         This is a todo list application built as a learning project to practice
         modern React patterns and full-stack development concepts
       </p>
 
-      <h3>Features</h3>
-      <ul>
-        <li>User authentication with secure session handling</li>
-        <li>Create, complete, and edit todos</li>
-        <li>Sort todos by creation date or title</li>
-        <li>Filter and search todos by title</li>
-        <li>Filter todos by status - all, active, completed</li>
-        <li>Optimistic UI updates with error rollback</li>
-      </ul>
+      <div>
+        <h3 className={styles.subheading}>Features</h3>
+        <ul className={styles.list}>
+          <li>User authentication with secure session handling</li>
+          <li>Create, complete, edit, and delete todos</li>
+          <li>Sort todos by creation date or title</li>
+          <li>Filter and search todos by title</li>
+          <li>Filter todos by status: all, active, completed</li>
+          <li>Optimistic UI updates with error rollback</li>
+        </ul>
+      </div>
 
-      <h3>Built with</h3>
-      <ul>
-        <li>React</li>
-        <li>React Router</li>
-        <li>Vite</li>
-      </ul>
+      <div>
+        <h3 className={styles.subheading}>Built with</h3>
+        <ul className={styles.list}>
+          <li>React</li>
+          <li>React Router</li>
+          <li>Vite</li>
+        </ul>
+      </div>
 
-      <Link to="/">Back to Home</Link>
+      <Link to="/" className={styles.link}>
+        Back to Home
+      </Link>
     </div>
   );
 }
