@@ -1,6 +1,6 @@
 import { useSearchParams } from "react-router";
-import StatusFilter from "../shared/StatusFilter";
 import { useEffect, useReducer } from "react";
+import StatusFilter from "../shared/StatusFilter";
 import TodoList from "../features/Todos/TodoList/TodoList";
 import TodoForm from "../features/Todos/TodoForm";
 import SortBy from "../shared/SortBy";
@@ -12,6 +12,7 @@ import {
   initialTodoState,
   todoReducer,
 } from "../reducers/todoReducer";
+import styles from "./TodosPage.module.css";
 
 function TodosPage() {
   const { token } = useAuth();
@@ -110,12 +111,10 @@ function TodosPage() {
         throw new Error(message);
       }
 
-      if (response.ok) {
-        dispatch({
-          type: TODO_ACTIONS.ADD_TODO_SUCCESS,
-          payload: { tempId: tempTodo.id, data: data },
-        });
-      }
+      dispatch({
+        type: TODO_ACTIONS.ADD_TODO_SUCCESS,
+        payload: { tempId: tempTodo.id, data: data },
+      });
     } catch (error) {
       dispatch({
         type: TODO_ACTIONS.ADD_TODO_ERROR,
@@ -154,9 +153,7 @@ function TodosPage() {
             : `Failed to mark Todo complete: ${data?.message}`;
         throw new Error(message);
       }
-      if (response.ok) {
-        dispatch({ type: TODO_ACTIONS.COMPLETE_TODO_SUCCESS });
-      }
+      dispatch({ type: TODO_ACTIONS.COMPLETE_TODO_SUCCESS });
     } catch (error) {
       dispatch({
         type: TODO_ACTIONS.COMPLETE_TODO_ERROR,
@@ -194,12 +191,41 @@ function TodosPage() {
             : "Failed to update Todo";
         throw new Error(message);
       }
-      if (response.ok) {
-        dispatch({ type: TODO_ACTIONS.UPDATE_TODO_SUCCESS });
-      }
+      dispatch({ type: TODO_ACTIONS.UPDATE_TODO_SUCCESS });
     } catch (error) {
       dispatch({
         type: TODO_ACTIONS.UPDATE_TODO_ERROR,
+        payload: { error: error.message, rollbackTodo },
+      });
+    }
+  }
+
+  // -------------- Delete Todo Function --------------
+  async function deleteTodo(id) {
+    const rollbackTodo = todoState.todoList.find((todo) => todo.id === id);
+    const remainingTodos = todoState.todoList.filter((todo) => todo.id !== id);
+    dispatch({
+      type: TODO_ACTIONS.DELETE_TODO_START,
+      payload: { remainingTodos },
+    });
+    try {
+      const response = await fetch(`/api/tasks/${id}`, {
+        method: "DELETE",
+        headers: { "X-CSRF-TOKEN": token },
+        credentials: "include",
+      });
+      if (!response.ok) {
+        const message =
+          response.status === 401
+            ? "Unauthorized: Please log in"
+            : "Failed to delete Todo";
+        throw new Error(message);
+      }
+      dispatch({ type: TODO_ACTIONS.DELETE_TODO_SUCCESS });
+    } catch (error) {
+      console.error(error);
+      dispatch({
+        type: TODO_ACTIONS.DELETE_TODO_ERROR,
         payload: { error: error.message, rollbackTodo },
       });
     }
@@ -263,6 +289,7 @@ function TodosPage() {
         todoList={todoState.todoList}
         onCompleteTodo={completeTodo}
         onUpdateTodo={updateTodo}
+        onDeleteTodo={deleteTodo}
         dataVersion={todoState.dataVersion}
         statusFilter={statusFilter}
         filterTerm={todoState.filterTerm}

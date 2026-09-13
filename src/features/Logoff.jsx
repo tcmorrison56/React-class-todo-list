@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router";
 import { useAuth } from "../contexts/AuthContext";
+import styles from "./Logoff.module.css";
 
 export default function Logoff() {
   const { logout } = useAuth();

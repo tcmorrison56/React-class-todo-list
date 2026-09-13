@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useAuth } from "../contexts/AuthContext";
+import styles from "./ProfilePage.module.css";
 
 function ProfilePage() {
   const { email, token, isAuthenticated } = useAuth();

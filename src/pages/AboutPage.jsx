@@ -1,4 +1,5 @@
 import { Link } from "react-router";
+import styles from "./AboutPage.module.css";
 
 function AboutPage() {
   return (
