@@ -7,6 +7,7 @@ function TodoList({
   onUpdateTodo,
   dataVersion,
   statusFilter = "active",
+  filterTerm,
 }) {
   const filteredTodoList = useMemo(() => {
     let filteredTodos;
@@ -27,6 +28,9 @@ function TodoList({
   }, [todoList, dataVersion, statusFilter]);
 
   const getEmptyMessage = () => {
+    if (filterTerm.trim() !== "") {
+      return "No Todos match your current filter.";
+    }
     switch (statusFilter) {
       case "completed":
         return "No completed todos yet. Complete some tasks to see them here.";

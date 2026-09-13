@@ -49,6 +49,7 @@ function LoginPage() {
       <label htmlFor="email">Email</label>
       <input
         type="email"
+        maxLength={254}
         id="email"
         value={email}
         onChange={handleChangeEmail}
@@ -57,6 +58,7 @@ function LoginPage() {
       <label htmlFor="password">Password</label>
       <input
         type="password"
+        maxLength={128}
         id="password"
         value={password}
         onChange={handleChangePassword}

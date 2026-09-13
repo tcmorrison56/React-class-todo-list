@@ -265,6 +265,7 @@ function TodosPage() {
         onUpdateTodo={updateTodo}
         dataVersion={todoState.dataVersion}
         statusFilter={statusFilter}
+        filterTerm={todoState.filterTerm}
       />
     </>
   );

@@ -11,13 +11,12 @@ export default function Logoff() {
   async function handleClick() {
     setError(null);
     setIsLoggingOff(true);
-    const res = await logout();
-    if (res.success) {
-      navigate("/login");
-    } else {
-      setError(res.error);
+    const result = await logout();
+    if (!result.success) {
+      setError(result.error);
     }
     setIsLoggingOff(false);
+    navigate("/login");
   }
 
   return (
