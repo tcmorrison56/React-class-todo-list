@@ -22,7 +22,10 @@ function TodoList({
         break;
       case "all":
       default:
-        filteredTodos = todoList;
+        filteredTodos = [
+          ...todoList.filter((todo) => !todo.isCompleted),
+          ...todoList.filter((todo) => todo.isCompleted),
+        ];
         break;
     }
 
