@@ -16,7 +16,11 @@
   font-size: var(--font-size-base);
   font-weight: 600;
   color: var(--color-accent-contrast);
-  background: linear-gradient(135deg, #9b6fa3, #6b4a72);
+  background: linear-gradient(
+    135deg,
+    var(--color-button-gradient-start),
+    var(--color-button-gradient-end)
+  );
   border: none;
   border-radius: var(--radius-sm);
   cursor: pointer;
@@ -26,7 +30,11 @@
 }
 
 .button:hover:not(:disabled) {
-  background: linear-gradient(135deg, #8a5f92, #5a3d60);
+  background: linear-gradient(
+    135deg,
+    var(--color-button-gradient-hover-start),
+    var(--color-button-gradient-hover-end)
+  );
 }
 
 .button:active:not(:disabled) {
@@ -39,7 +47,7 @@
 }
 
 .button:disabled {
-  background-color: var(--color-border);
+  background: var(--color-border);
   color: var(--color-text-muted);
   cursor: not-allowed;
 }

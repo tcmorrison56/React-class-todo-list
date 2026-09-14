@@ -24,9 +24,9 @@
   margin-bottom: var(--spacing-sm);
   background: linear-gradient(
     120deg,
-    var(--color-accent) 20%,
-    #b06cba 50%,
-    var(--color-accent) 80%
+    var(--color-title-gradient-start) 20%,
+    var(--color-title-gradient-mid) 50%,
+    var(--color-title-gradient-end) 80%
   );
   background-clip: text;
   -webkit-background-clip: text;
@@ -50,7 +50,7 @@
   width: 100%;
   box-sizing: border-box;
   padding: var(--spacing-sm) var(--spacing-md);
-  font-size: 1rem;
+  font-size: var(--font-size-base);
   font-family: var(--font-family-base);
   color: var(--color-text);
   background-color: var(--color-surface);
@@ -64,7 +64,7 @@
 .input:focus {
   outline: none;
   border-color: var(--color-accent);
-  box-shadow: 0 0 0 3px rgba(122, 89, 128, 0.15);
+  box-shadow: 0 0 0 3px var(--color-accent-focus-ring);
 }
 
 .error {
@@ -79,10 +79,14 @@
 .button {
   padding: var(--spacing-sm) var(--spacing-lg);
   font-family: var(--font-family-base);
-  font-size: 0.95rem;
+  font-size: var(--font-size-base);
   font-weight: 600;
   color: var(--color-accent-contrast);
-  background: linear-gradient(135deg, #9b6fa3, #6b4a72);
+  background: linear-gradient(
+    135deg,
+    var(--color-button-gradient-start),
+    var(--color-button-gradient-end)
+  );
   border: none;
   border-radius: var(--radius-sm);
   cursor: pointer;
@@ -90,7 +94,11 @@
 }
 
 .button:hover:not(:disabled) {
-  background: linear-gradient(135deg, #8a5f92, #5a3d60);
+  background: linear-gradient(
+    135deg,
+    var(--color-button-gradient-hover-start),
+    var(--color-button-gradient-hover-end)
+  );
 }
 
 .button:focus-visible {
@@ -99,7 +107,7 @@
 }
 
 .button:disabled {
-  background-color: var(--color-border);
+  background: var(--color-border);
   color: var(--color-text-muted);
   cursor: not-allowed;
 }

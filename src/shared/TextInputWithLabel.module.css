@@ -34,7 +34,7 @@
 .input:focus {
   outline: none;
   border-color: var(--color-accent);
-  box-shadow: 0 0 0 3px rgba(122, 89, 128, 0.15);
+  box-shadow: 0 0 0 3px var(--color-accent-focus-ring);
 }
 
 .input:disabled {
