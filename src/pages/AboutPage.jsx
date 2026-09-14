@@ -28,6 +28,7 @@ function AboutPage() {
           <li className={styles.techTag}>React</li>
           <li className={styles.techTag}>React Router</li>
           <li className={styles.techTag}>Vite</li>
+          <li className={styles.techTag}>CSS Modules</li>
         </ul>
       </div>
 
