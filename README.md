@@ -4,7 +4,7 @@ A todo list application built as part of [Code the Dream's](https://codethedream
 
 ## 🚀 Live Demo
 
-[View Live Application](https://your-deployed-app.vercel.app)
+[View Live Application](vercellinkplaceholder)
 
 > Note: Full functionality (adding, editing, and managing todos) requires logging in, which is tied to Code the Dream's shared account system. The screenshots below show the authenticated experience, including light/dark mode and mobile/desktop views.
 
@@ -76,8 +76,8 @@ Requires [Node.js](https://nodejs.org/) v18 or later.
 1. Clone the repository:
 
 ```bash
-   git clone https://github.com/yourusername/timo-todo.git
-   cd timo-todo
+   git clone https://github.com/tcmorrison56/React-class-todo-list
+   cd React-class-todo-list
 ```
 
 2. Install dependencies:
@@ -144,6 +144,6 @@ This project is licensed under the [MIT License](LICENSE).
 
 Feel free to reach out with any questions or feedback.
 
-- **Email:** your.email@example.com
-- **GitHub:** [@yourusername](https://github.com/yourusername)
-- **LinkedIn:** [Your Name](https://linkedin.com/in/your-profile)
+- **Email:** tcmorrison56@gmail.com
+- **GitHub:** [@tcmorrison56](https://github.com/tcmorrison56)
+- **LinkedIn:** [Tim Morrison](https://linkedin.com/in/timothy-morrison-a890aa140/)
