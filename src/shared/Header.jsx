@@ -8,7 +8,7 @@ export default function Header() {
   return (
     <header className={styles.header}>
       <div className={styles.inner}>
-        <h1 className={styles.title}>Todo List</h1>
+        <h1 className={styles.title}>TiMo ToDo</h1>
         <div className={styles.navRow}>
           <Navigation />
           {isAuthenticated && <Logoff />}

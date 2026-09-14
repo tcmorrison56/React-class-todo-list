@@ -24,10 +24,10 @@ function AboutPage() {
 
       <div>
         <h3 className={styles.subheading}>Built with</h3>
-        <ul className={styles.list}>
-          <li>React</li>
-          <li>React Router</li>
-          <li>Vite</li>
+        <ul className={styles.techTags}>
+          <li className={styles.techTag}>React</li>
+          <li className={styles.techTag}>React Router</li>
+          <li className={styles.techTag}>Vite</li>
         </ul>
       </div>
 

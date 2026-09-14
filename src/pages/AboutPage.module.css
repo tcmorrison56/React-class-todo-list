@@ -36,15 +36,37 @@
   color: var(--color-accent);
 }
 
+.techTags {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-sm);
+  padding: 0;
+  margin: 0;
+}
+
+.techTag {
+  padding: var(--spacing-xs) var(--spacing-md);
+  background-color: rgba(122, 89, 128, 0.1);
+  color: var(--color-accent);
+  border-radius: var(--radius-lg);
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+}
+
 .link {
   align-self: flex-start;
+  padding: var(--spacing-xs) var(--spacing-sm);
+  border-radius: var(--radius-sm);
   color: var(--color-accent);
   font-weight: 600;
   text-decoration: none;
+  transition: background-color 0.15s ease;
 }
 
 .link:hover {
-  text-decoration: underline;
+  background-color: rgba(122, 89, 128, 0.1);
+  text-decoration: none;
 }
 
 .link:focus-visible {

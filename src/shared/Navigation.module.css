@@ -24,7 +24,7 @@
 }
 
 .link:hover {
-  background-color: var(--color-border);
+  background-color: rgba(122, 89, 128, 0.08);
   color: var(--color-text);
 }
 
@@ -36,7 +36,7 @@
 .activeLink {
   color: var(--color-accent);
   font-weight: 600;
-  background-color: var(--color-border);
+  background-color: rgba(122, 89, 128, 0.14);
 }
 
 @media (min-width: 768px) {

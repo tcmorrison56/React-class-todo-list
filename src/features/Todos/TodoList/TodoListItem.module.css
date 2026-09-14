@@ -1,6 +1,11 @@
 .item {
   padding: var(--spacing-md);
   border-bottom: 1px solid var(--color-border);
+  transition: background-color 0.15s ease;
+}
+
+.item:hover {
+  background-color: rgba(122, 89, 128, 0.04);
 }
 
 .item:last-child {

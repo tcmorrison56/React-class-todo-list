@@ -1,15 +1,14 @@
 :root {
   /* Light mode (default) — grays carry a subtle plum undertone */
   --color-bg: #faf9fa;
-  --color-surface: #ffffff;
-  --color-surface-raised: #ffffff;
+  --color-surface: #fdfbfd;
   --color-text: #211e22;
   --color-text-muted: #767078;
   --color-heading: #5a3d60;
   --color-border: #e5e1e4;
   --color-accent: #7a5980;
   --color-accent-hover: #634768;
-  --color-accent-contrast: #ffffff;
+  --color-accent-contrast: #fdfbfd;
   --color-error: #c4634a;
   --color-success: #4a7862;
 
@@ -62,6 +61,22 @@
 body {
   margin: 0;
   background-color: var(--color-bg);
+  background-image:
+    radial-gradient(
+      ellipse 70% 50% at 82% 12%,
+      rgba(155, 79, 166, 0.13),
+      rgba(155, 79, 166, 0.02) 35%
+    ),
+    radial-gradient(
+      ellipse 55% 40% at 15% 88%,
+      rgba(155, 79, 166, 0.06),
+      transparent 45%
+    ),
+    radial-gradient(
+      circle at 68% 70%,
+      rgba(155, 79, 166, 0.04),
+      transparent 30%
+    );
   color: var(--color-text);
   font-family: var(--font-family-base);
   line-height: 1.6;
