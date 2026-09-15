@@ -1,0 +1,115 @@
+.header {
+  position: relative;
+  background-color: var(--color-surface);
+  box-shadow: var(--shadow-md);
+}
+
+.inner {
+  max-width: 700px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+  padding: var(--spacing-lg) var(--spacing-md);
+  box-sizing: border-box;
+}
+
+.topRow {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.title {
+  display: inline-block;
+  width: fit-content;
+  font-size: 2.5rem;
+  letter-spacing: -0.02em;
+  background: linear-gradient(
+    120deg,
+    var(--color-title-gradient-start) 20%,
+    var(--color-title-gradient-mid) 50%,
+    var(--color-title-gradient-end) 80%
+  );
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: var(--color-accent);
+}
+
+.menuToggle,
+.themeToggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  padding: 0;
+  font-size: 1.25rem;
+  line-height: 1;
+  color: var(--color-text-muted);
+  background-color: transparent;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition:
+    background-color 0.15s ease,
+    color 0.15s ease;
+}
+
+.menuToggle:hover,
+.themeToggle:hover {
+  background-color: var(--color-border);
+  color: var(--color-text);
+}
+
+.menuToggle:focus-visible,
+.themeToggle:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+.navRow {
+  display: flex;
+  width: 100%;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: var(--spacing-sm);
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition:
+    max-height 0.2s ease,
+    opacity 0.2s ease;
+}
+
+.navRowOpen {
+  max-height: 300px;
+  opacity: 1;
+}
+
+@media (min-width: 768px) {
+  .menuToggle {
+    display: none;
+  }
+
+  .inner {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .topRow {
+    width: auto;
+    justify-content: flex-start;
+    gap: var(--spacing-md);
+  }
+
+  .navRow {
+    display: flex;
+    width: auto;
+    justify-content: flex-end;
+  }
+}

@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useAuth } from "../contexts/AuthContext";
+import styles from "./ProfilePage.module.css";
 
 function ProfilePage() {
   const { email, token, isAuthenticated } = useAuth();
@@ -39,7 +40,8 @@ function ProfilePage() {
 
         setTodoStats({ total, completed, active, completePercent });
       } catch (error) {
-        setError(`Error loading statistics: ${error}`);
+        console.error("Profile fetch error:", error);
+        setError("Unable to load your profile statistics. Please try again.");
       } finally {
         setIsLoading(false);
       }
@@ -50,21 +52,43 @@ function ProfilePage() {
   }, [token]);
 
   return (
-    <div>
-      <h2>Profile</h2>
-      {error && <p>{error}</p>}
-      {isLoading && <p>Loading profile...</p>}
-      <p>Welcome {email}</p>
-      <p>Status: {isAuthenticated ? "Authenticated" : "Unauthorized"}</p>
+    <div className={styles.page}>
+      <div className={styles.accountCard}>
+        <h2 className={styles.accountName}>Welcome, {email}</h2>
+        <p className={styles.accountStatus}>
+          Status: {isAuthenticated ? "Authenticated" : "Unauthorized"}
+        </p>
+      </div>
+
+      {error && <p className={styles.error}>{error}</p>}
+      {isLoading && <p className={styles.loading}>Loading profile...</p>}
+
       {!isLoading && !error && (
-        <>
-          <p>Total todos: {todoStats.total}</p>
-          <p>Completed todos: {todoStats.completed}</p>
-          <p>Active todos: {todoStats.active}</p>
-          {todoStats.total > 0 && (
-            <p>Todo completion percentage: {todoStats.completePercent}%</p>
-          )}
-        </>
+        <div className={styles.statsSection}>
+          <h3 className={styles.statsHeading}>Your Todos</h3>
+          <div className={styles.statsGrid}>
+            <div className={styles.statTile}>
+              <span className={styles.statValue}>{todoStats.total}</span>
+              <span className={styles.statLabel}>Total</span>
+            </div>
+            <div className={styles.statTile}>
+              <span className={styles.statValue}>{todoStats.completed}</span>
+              <span className={styles.statLabel}>Completed</span>
+            </div>
+            <div className={styles.statTile}>
+              <span className={styles.statValue}>{todoStats.active}</span>
+              <span className={styles.statLabel}>Active</span>
+            </div>
+            {todoStats.total > 0 && (
+              <div className={styles.statTile}>
+                <span className={styles.statValue}>
+                  {todoStats.completePercent}%
+                </span>
+                <span className={styles.statLabel}>Complete</span>
+              </div>
+            )}
+          </div>
+        </div>
       )}
     </div>
   );

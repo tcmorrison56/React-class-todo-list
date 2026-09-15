@@ -1,12 +1,15 @@
 import { useMemo } from "react";
 import TodoListItem from "./TodoListItem";
+import styles from "./TodoList.module.css";
 
 function TodoList({
   todoList,
   onCompleteTodo,
   onUpdateTodo,
+  onDeleteTodo,
   dataVersion,
   statusFilter = "active",
+  filterTerm,
 }) {
   const filteredTodoList = useMemo(() => {
     let filteredTodos;
@@ -19,7 +22,10 @@ function TodoList({
         break;
       case "all":
       default:
-        filteredTodos = todoList;
+        filteredTodos = [
+          ...todoList.filter((todo) => !todo.isCompleted),
+          ...todoList.filter((todo) => todo.isCompleted),
+        ];
         break;
     }
 
@@ -27,6 +33,9 @@ function TodoList({
   }, [todoList, dataVersion, statusFilter]);
 
   const getEmptyMessage = () => {
+    if (filterTerm.trim() !== "") {
+      return "No Todos match your current filter.";
+    }
     switch (statusFilter) {
       case "completed":
         return "No completed todos yet. Complete some tasks to see them here.";
@@ -39,15 +48,16 @@ function TodoList({
   };
 
   return filteredTodoList.todos.length === 0 ? (
-    <p>{getEmptyMessage()}</p>
+    <p className={styles.emptyMessage}>{getEmptyMessage()}</p>
   ) : (
-    <ul>
+    <ul className={styles.list}>
       {filteredTodoList.todos.map((todo) => (
         <TodoListItem
           todo={todo}
           key={todo.id}
           onCompleteTodo={onCompleteTodo}
           onUpdateTodo={onUpdateTodo}
+          onDeleteTodo={onDeleteTodo}
         />
       ))}
     </ul>

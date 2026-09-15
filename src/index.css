@@ -1,0 +1,139 @@
+:root {
+  /* ---------- Core surface & text colors ---------- */
+  --color-bg: #faf9fa;
+  --color-surface: #fdfbfd;
+  --color-surface-raised: #fdfbfd;
+  --color-text: #211e22;
+  --color-text-muted: #767078;
+  --color-heading: #5a3d60;
+  --color-border: #e5e1e4;
+
+  /* ---------- Accent (primary brand color) ---------- */
+  --color-accent: #7a5980;
+  --color-accent-hover: #634768;
+  --color-accent-contrast: #fdfbfd;
+
+  /* ---------- Accent tints (translucent overlays for hover/active states) ---------- */
+  --color-accent-tint-subtle: rgba(122, 89, 128, 0.04);
+  --color-accent-tint-hover: rgba(122, 89, 128, 0.08);
+  --color-accent-tint-active: rgba(122, 89, 128, 0.14);
+  --color-accent-focus-ring: rgba(122, 89, 128, 0.15);
+
+  /* ---------- Gradients (title & primary buttons) ---------- */
+  --color-title-gradient-start: var(--color-accent);
+  --color-title-gradient-mid: #b06cba;
+  --color-title-gradient-end: var(--color-accent);
+  --color-button-gradient-start: #9b6fa3;
+  --color-button-gradient-end: #6b4a72;
+  --color-button-gradient-hover-start: #8a5f92;
+  --color-button-gradient-hover-end: #5a3d60;
+
+  /* ---------- Semantic status colors ---------- */
+  --color-error: #c4634a;
+  --color-success: #4a7862;
+
+  /* ---------- Typography ---------- */
+  --font-family-heading: "Outfit", -apple-system, sans-serif;
+  --font-family-base: "Inter", -apple-system, "Segoe UI", sans-serif;
+  --font-size-xs: 0.8rem;
+  --font-size-sm: 0.9rem;
+  --font-size-base: 1rem;
+  --font-size-md: 1.1rem;
+  --font-size-lg: 1.4rem;
+  --font-size-xl: 1.75rem;
+  --font-size-2xl: 2rem;
+
+  /* ---------- Spacing scale ---------- */
+  --spacing-xs: 0.25rem;
+  --spacing-sm: 0.5rem;
+  --spacing-md: 1rem;
+  --spacing-lg: 1.5rem;
+  --spacing-xl: 2.5rem;
+
+  /* ---------- Radius & shadow ---------- */
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+  --shadow-sm: 0 1px 3px rgba(33, 30, 34, 0.06);
+  --shadow-md: 0 4px 16px rgba(33, 30, 34, 0.08);
+}
+
+[data-theme="dark"] {
+  /* ---------- Core surface & text colors ---------- */
+  --color-bg: #19171a;
+  --color-surface: #232024;
+  --color-surface-raised: #2c282d;
+  --color-text: #f3f1f3;
+  --color-text-muted: #a69fa5;
+  --color-heading: #d9aede;
+  --color-border: #3c373c;
+
+  /* ---------- Accent (primary brand color) ---------- */
+  --color-accent: #a688ab;
+  --color-accent-hover: #bc9ec1;
+  --color-accent-emphasis: var(--color-accent-hover);
+  --color-accent-contrast: #19171a;
+
+  /* ---------- Accent tints (translucent overlays for hover/active states) ---------- */
+  --color-accent-tint-subtle: rgba(166, 136, 171, 0.06);
+  --color-accent-tint-hover: rgba(166, 136, 171, 0.12);
+  --color-accent-tint-active: rgba(166, 136, 171, 0.2);
+  --color-accent-focus-ring: rgba(166, 136, 171, 0.22);
+
+  /* ---------- Gradients (title & primary buttons) ---------- */
+  --color-title-gradient-start: #c89ecd;
+  --color-title-gradient-mid: #e8c4ec;
+  --color-title-gradient-end: #c89ecd;
+  --color-button-gradient-start: #c89ecd;
+  --color-button-gradient-end: #9b6fa3;
+  --color-button-gradient-hover-start: #d9b8dd;
+  --color-button-gradient-hover-end: #ac82b4;
+
+  /* ---------- Semantic status colors ---------- */
+  --color-error: #e37e68;
+  --color-success: #5fbf94;
+
+  /* ---------- Shadow (darker, more pronounced against dark surfaces) ---------- */
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.4);
+}
+
+body {
+  margin: 0;
+  background-color: var(--color-bg);
+  background-image:
+    radial-gradient(
+      ellipse 70% 50% at 82% 12%,
+      rgba(155, 79, 166, 0.13),
+      rgba(155, 79, 166, 0.02) 35%
+    ),
+    radial-gradient(
+      ellipse 55% 40% at 15% 88%,
+      rgba(155, 79, 166, 0.06),
+      transparent 45%
+    ),
+    radial-gradient(
+      circle at 68% 70%,
+      rgba(155, 79, 166, 0.04),
+      transparent 30%
+    );
+  color: var(--color-text);
+  font-family: var(--font-family-base);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-family-heading);
+  font-weight: 600;
+  color: var(--color-heading);
+  margin: 0;
+}

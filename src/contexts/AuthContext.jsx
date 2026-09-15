@@ -40,9 +40,10 @@ export function AuthProvider({ children }) {
         };
       }
     } catch (error) {
+      console.error(error);
       return {
         success: false,
-        error: `Network error during login: ${error}`,
+        error: `Unable to connect. Please check your connection and try again`,
       };
     }
   };
@@ -61,13 +62,13 @@ export function AuthProvider({ children }) {
     };
 
     try {
-      const res = await fetch("/api/users/logoff", options);
-      const data = await res.json();
+      const result = await fetch("/api/users/logoff", options);
+      const data = await result.json();
 
       setEmail("");
       setToken("");
 
-      if (res.status === 200) {
+      if (result.status === 200) {
         return {
           success: true,
         };
@@ -80,9 +81,10 @@ export function AuthProvider({ children }) {
     } catch (error) {
       setEmail("");
       setToken("");
+      console.error(error);
       return {
         success: false,
-        error: `Failed to logout: ${error}`,
+        error: `You've been logged out locally, but we couldn't confirm this with the server`,
       };
     }
   };
