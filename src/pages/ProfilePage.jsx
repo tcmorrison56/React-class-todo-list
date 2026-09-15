@@ -40,7 +40,8 @@ function ProfilePage() {
 
         setTodoStats({ total, completed, active, completePercent });
       } catch (error) {
-        setError(`Error loading statistics: ${error}`);
+        console.error("Profile fetch error:", error);
+        setError("Unable to load your profile statistics. Please try again.");
       } finally {
         setIsLoading(false);
       }
