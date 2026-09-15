@@ -29,6 +29,7 @@ A todo list application built as part of [Code the Dream's](https://codethedream
 
 - Light and dark mode, with system preference detection and persistence across visits
 - Fully responsive, mobile-first layout
+- Collapsible mobile navigation menu, keeping the header clean and focused on small screens
 - Profile page with account info and todo statistics (total, active, completed, completion percentage)
 - Custom 404 page with navigation back to key parts of the app
 - Accessible focus states and labels throughout
@@ -43,12 +44,12 @@ A todo list application built as part of [Code the Dream's](https://codethedream
 
 ## 📸 Screenshots
 
-### Todos — Light & Dark Mode (Desktop)
+### Todos — Light & Dark Mode
 
 <table>
   <tr>
-    <td><img src="./screenshots/todos-light.png" alt="Todos page in light mode" width="400"/></td>
-    <td><img src="./screenshots/todos-dark.png" alt="Todos page in dark mode" width="400"/></td>
+    <td><img src="./screenshots/todos-light.png" alt="Todos page in light mode" width="250"/></td>
+    <td><img src="./screenshots/todos-dark.png" alt="Todos page in dark mode" width="250"/></td>
   </tr>
 </table>
 
@@ -56,7 +57,7 @@ A todo list application built as part of [Code the Dream's](https://codethedream
 
 <table>
   <tr>
-    <td><img src="./screenshots/todos-mobile.png" alt="Todos page on mobile" width="250"/></td>
+    <td><img src="./screenshots/todos-dark.png" alt="Todos page on mobile" width="250"/></td>
     <td><img src="./screenshots/todos-desktop.png" alt="Todos page on desktop" width="500"/></td>
   </tr>
 </table>
@@ -120,6 +121,7 @@ A few smaller, deliberate choices:
 - **Within the "All" filter view, active todos are ordered ahead of completed ones**, rather than mixed together in creation order. Users can still filter to see only Active or only Completed via the status dropdown — this ordering is specifically about making the combined "All" view easier to scan. I initially considered a version with separate section headings and per-section empty states, but it added real complexity for a fairly small visual benefit; simply reordering the existing list achieves the same clarity with far less code.
 - **The 404 page links to protected routes (`/todos`, `/profile`) even when logged out.** Since the app's `RequireAuth` component preserves the originally intended destination and redirects back after login, showing these links gets a lost user to where they want to go faster than hiding them would.
 - **The app is mobile-first**, built around a single `768px` breakpoint. Layouts and typography start from the mobile case and are enhanced for larger screens, rather than the reverse.
+- **A collapsible mobile navigation menu**, added late in the project. It looked like a small addition on paper, but it took real iteration to get the responsive layout right across breakpoints, and it noticeably changed how "finished" the app felt on mobile — more evidence that small, well-executed details can matter more than their apparent scope suggests.
 
 ### Architecture
 
@@ -130,8 +132,7 @@ A few smaller, deliberate choices:
 ## 🔭 Future Improvements
 
 - **Toggle-able todo completion.** Currently, marking a todo complete is one-directional. I'd like to change this to a true toggle, so a todo can be marked active again if it was completed by mistake.
-- **Continue refining both light and dark mode.** Both themes are fully functional and visually consistent, but there's always room for further polish — small contrast tweaks, spacing adjustments, and general refinement as I keep using the app day to day.
-- **Consolidate mobile header controls into a menu.** On small screens, the header currently shows navigation links, the theme toggle, and logout all at once, wrapped across the available width. Moving these into a single hamburger-style menu could simplify the mobile header and provide a cleaner initial view.
+- **Bring light mode up to the same level of polish as dark mode.** After using the app in production, I've noticed the background gradient and some visual details don't feel as refined in light mode. I'd like to revisit the light-mode palette and gradient treatment to match the quality of what I built for dark mode.
 - **Automated testing.** The app doesn't currently have any automated tests — everything has been verified manually. Adding component and integration tests with Jest and React Testing Library would be a natural next step for confidence and maintainability.
 - **Progressive Web App (PWA) support.** Since this is a mobile-first todo app, offline support and the ability to install it to a home screen (via a service worker) would be a natural fit for how people actually want to use a todo list day to day.
 - **A self-built backend.** This app currently relies on Code the Dream's shared backend API. Building my own Node.js/Express backend — matching the same API contract this frontend already expects — feels like a natural next project as I move into backend development.
