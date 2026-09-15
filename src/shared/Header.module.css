@@ -111,5 +111,8 @@
     display: flex;
     width: auto;
     justify-content: flex-end;
+    max-height: none;
+    overflow: visible;
+    opacity: 1;
   }
 }
