@@ -4,7 +4,7 @@ A todo list application built as part of [Code the Dream's](https://codethedream
 
 ## 🚀 Live Demo
 
-[View Live Application](vercellinkplaceholder)
+[View Live Application](https://react-class-todo-list.vercel.app)
 
 > Note: Full functionality (adding, editing, and managing todos) requires logging in, which is tied to Code the Dream's shared account system. The screenshots below show the authenticated experience, including light/dark mode and mobile/desktop views.
 
