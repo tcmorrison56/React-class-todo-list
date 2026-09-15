@@ -60,8 +60,8 @@ function ProfilePage() {
         </p>
       </div>
 
-      {error && <p>{error}</p>}
-      {isLoading && <p>Loading profile...</p>}
+      {error && <p className={styles.error}>{error}</p>}
+      {isLoading && <p className={styles.loading}>Loading profile...</p>}
 
       {!isLoading && !error && (
         <div className={styles.statsSection}>

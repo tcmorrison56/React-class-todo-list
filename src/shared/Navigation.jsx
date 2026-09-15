@@ -10,10 +10,7 @@ function Navigation() {
 
   return (
     <nav className={styles.nav}>
-      <ul
-        className={styles.list}
-        style={{ listStyle: "none", display: "flex", gap: "1rem", padding: 0 }}
-      >
+      <ul className={styles.list}>
         <li>
           <NavLink to="/about" className={linkClassName}>
             About
