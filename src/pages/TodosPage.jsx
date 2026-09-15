@@ -22,6 +22,8 @@ function TodosPage() {
 
   const statusFilter = searchParams.get("status") || "all";
 
+  const UNAUTHORIZED_MESSAGE = "Unauthorized. Please log in and try again";
+
   // ---------- Filter handler function ----------
   const handleFilterChange = (newTerm) => {
     dispatch({ type: TODO_ACTIONS.SET_FILTER, payload: { term: newTerm } });
@@ -49,7 +51,7 @@ function TodosPage() {
         if (!response.ok) {
           const message =
             response.status === 401
-              ? `Unauthorized: ${data?.message}`
+              ? UNAUTHORIZED_MESSAGE
               : `Unable to load todos: ${data?.message}`;
 
           throw new Error(message);
@@ -106,7 +108,7 @@ function TodosPage() {
       if (!response.ok) {
         const message =
           response.status === 401
-            ? `Unauthorized: Please log in ${data?.message}`
+            ? UNAUTHORIZED_MESSAGE
             : `Failed to add Todo: ${data?.message}`;
         throw new Error(message);
       }
@@ -149,7 +151,7 @@ function TodosPage() {
       if (!response.ok) {
         const message =
           response.status === 401
-            ? `Unauthorized: Please log in ${data?.message}`
+            ? UNAUTHORIZED_MESSAGE
             : `Failed to mark Todo complete: ${data?.message}`;
         throw new Error(message);
       }
@@ -184,11 +186,13 @@ function TodosPage() {
           isCompleted: editedTodo.isCompleted,
         }),
       });
+      const data = await response.json();
+
       if (!response.ok) {
         const message =
           response.status === 401
-            ? "Unauthorized: Please log in"
-            : "Failed to update Todo";
+            ? UNAUTHORIZED_MESSAGE
+            : `Failed to update Todo: ${data?.message}`;
         throw new Error(message);
       }
       dispatch({ type: TODO_ACTIONS.UPDATE_TODO_SUCCESS });
@@ -214,11 +218,13 @@ function TodosPage() {
         headers: { "X-CSRF-TOKEN": token },
         credentials: "include",
       });
+      const data = await response.json();
+
       if (!response.ok) {
         const message =
           response.status === 401
-            ? "Unauthorized: Please log in"
-            : "Failed to delete Todo";
+            ? UNAUTHORIZED_MESSAGE
+            : `Failed to delete Todo: ${data?.message}`;
         throw new Error(message);
       }
       dispatch({ type: TODO_ACTIONS.DELETE_TODO_SUCCESS });

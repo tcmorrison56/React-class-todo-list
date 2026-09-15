@@ -5,11 +5,6 @@ import styles from "./Navigation.module.css";
 function Navigation() {
   const { isAuthenticated } = useAuth();
 
-  // const navLinkStyle = ({ isActive }) => ({
-  //   fontWeight: isActive ? "bold" : "normal",
-  //   textDecoration: isActive ? "underline" : "none",
-  // });
-
   const linkClassName = ({ isActive }) =>
     isActive ? `${styles.link} ${styles.activeLink}` : styles.link;
 

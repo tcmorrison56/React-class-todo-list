@@ -48,7 +48,7 @@ function LoginPage() {
     <div className={styles.wrapper}>
       <form onSubmit={handleSubmit} className={styles.form}>
         <h2 className={styles.heading}>Log In</h2>
-        {error && <p>{error}</p>}
+        {error && <p className={styles.error}>{error}</p>}
         <div className={styles.field}>
           <label htmlFor="email" className={styles.label}>
             Email
