@@ -13,6 +13,7 @@ function FilterInput({ filterTerm, onFilterChange }) {
         onChange={(e) => onFilterChange(e.target.value)}
         placeholder="Search by title..."
         className={styles.input}
+        maxLength={150}
       />
     </div>
   );
